@@ -2,16 +2,23 @@ const k8sApi = require('../kube-api');
 const React = require('react');
 const importJsx = require('import-jsx');
 const NamespacesComponent = importJsx('../components/namespaces');
-const { useState, useEffect } = require('react');
+const { Component } = require('react');
 
-const Namespaces = () => {
-  const [namespaces, setNamespaces] = useState([]);
+class Namespaces extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { namespaces: [] };
+  }
 
-  k8sApi.listNamespace().then(response => {
-    setNamespaces(response.body.items);
-  });
-  
-  return <NamespacesComponent namespaces={namespaces}/>;
+  componentDidMount() {
+    k8sApi.listNamespace().then(response => {
+      this.setState({ namespaces: response.body.items });
+    });
+  }
+
+  render() {
+    return <NamespacesComponent namespaces={this.state.namespaces} />;
+  }
 }
 
 module.exports = Namespaces;
