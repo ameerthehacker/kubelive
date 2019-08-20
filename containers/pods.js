@@ -6,18 +6,19 @@ const { Component } = require('react');
 const propTypes = require('prop-types');
 const TimeAgo = require('javascript-time-ago');
 const en = require('javascript-time-ago/locale/en');
+const { Color } = require('ink');
 
 class Pods extends Component {
   constructor(props) {
     super(props);
-    this.state = { pods: [] };
+    this.state = { pods: [], err: '' };
     this.timer;
     TimeAgo.addLocale(en);
     this.timeAgo = new TimeAgo('en-US');
   }
 
   componentWillUpdate(nextProps) {
-    if(this.props.namespace != nextProps.namespace) {
+    if(this.props.namespace != nextProps.namespace && !this.state.err) {
       this.listenForChanges(nextProps.namespace);
     }
   }
@@ -36,6 +37,8 @@ class Pods extends Component {
     this.timer = setInterval(() => {
       k8sApi.listNamespacedPod(namespace).then(response => {
         this.setState({ pods: this.transformPodData(response.body.items) });
+      }).catch(err => {
+        this.setState({ ...this.state, err: err.code });
       });
     }, 500);
   }
@@ -43,8 +46,6 @@ class Pods extends Component {
   colorCodeStatus(status) {
     switch(status) {
       case "Terminating":
-        return { bgColor: "red", color: "white" }
-      case "OutOfmemory":
         return { bgColor: "red", color: "white" }
       case "Failed":
         return { bgColor: "red", color: "white" }
@@ -70,12 +71,13 @@ class Pods extends Component {
 
       podStatus = itemStatus.phase;
 
-      if(itemStatus.reason) {
-        podStatus = itemStatus.reason;
-      }
-
       if(item.metadata.deletionTimestamp) {
         podStatus = 'Terminating'
+        itemStatus.phase = 'Terminating';
+      }
+
+      if(itemStatus.reason) {
+        podStatus = itemStatus.reason;
       }
 
       let readyContainers = 0;
@@ -93,7 +95,7 @@ class Pods extends Component {
       pods.push({
         name: { text: item.metadata.name },
         ready: { text: `${readyContainers}/${item.spec.containers.length}` },
-        status: { text: podStatus, ...this.colorCodeStatus(podStatus) },
+        status: { text: podStatus, ...this.colorCodeStatus(itemStatus.phase) },
         restarts: { text: restartCount },
         age: {
           text: this.timeAgo.format(item.status.startTime, { flavour: 'tiny' })
@@ -105,7 +107,12 @@ class Pods extends Component {
   }
 
   render() {
-    return <PodsComponent pods={this.state.pods} />;
+    if(!this.state.err) {
+      return <PodsComponent pods={this.state.pods} />;
+    }
+    else {
+      return <Color red>Unable to connect to the kube cluster: {this.state.err}</Color>
+    }
   }
 }
 

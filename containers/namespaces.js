@@ -3,12 +3,13 @@ const React = require('react');
 const importJsx = require('import-jsx');
 const NamespacesComponent = importJsx('../components/namespaces');
 const { Component } = require('react');
+const { Color } = require('ink');
 const propTypes = require('prop-types');
 
 class Namespaces extends Component {
   constructor(props) {
     super(props);
-    this.state = { namespaces: [] };
+    this.state = { namespaces: [], err: '' };
   }
 
   componentDidMount() {
@@ -21,11 +22,18 @@ class Namespaces extends Component {
       if(namespaces.length > 0) {
         this.props.onNamespaceChange(namespaces[0].metadata.name);
       }
+    }).catch(err => {
+      this.setState({ ...this.state, err: err.code });
     });
   }
 
   render() {
-    return <NamespacesComponent onNamespaceChange={this.props.onNamespaceChange} namespaces={this.state.namespaces} />;
+    if(!this.state.err) {
+      return <NamespacesComponent onNamespaceChange={this.props.onNamespaceChange} namespaces={this.state.namespaces} />;
+    }
+    else {
+      return <Color red>Unable to connect to the kube cluster: {this.state.err}</Color>
+    }
   }
 }
 
