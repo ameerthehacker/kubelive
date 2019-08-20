@@ -1,6 +1,6 @@
 const React = require('react');
 const { Tab, Tabs } = require('ink-tab');
-const propTypes = require('prop-types');
+const PropTypes = require('prop-types');
 
 const NamespacesComponent = ({namespaces, onNamespaceChange}) => {  
   return (
@@ -11,8 +11,8 @@ const NamespacesComponent = ({namespaces, onNamespaceChange}) => {
 }
 
 NamespacesComponent.propTypes = {
-  namespaces: propTypes.array,
-  onNamespaceChange: propTypes.func
+  namespaces: PropTypes.array.isRequired,
+  onNamespaceChange: PropTypes.func
 };
 
 module.exports = NamespacesComponent;

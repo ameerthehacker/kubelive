@@ -4,7 +4,7 @@ const importJsx = require('import-jsx');
 const NamespacesComponent = importJsx('../components/namespaces');
 const { Component } = require('react');
 const { Color } = require('ink');
-const propTypes = require('prop-types');
+const PropTypes = require('prop-types');
 
 class Namespaces extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class Namespaces extends Component {
 }
 
 Namespaces.propTypes = {
-  onNamespaceChange: propTypes.func  
+  onNamespaceChange: PropTypes.func  
 }
 
 module.exports = Namespaces;
