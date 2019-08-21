@@ -88,8 +88,8 @@ const TableComponent = ({ data, cellSpacing }) => {
   data.forEach(row => {
     tableHeaderTexts.forEach(header => {
       // Pad text specifies extra space that is to the cell 
-      if(row[header].padText !== undefined) {
-        row[header].text = padAroundStringWithSpaces(row[header].text, maxLengthOfTextInHeader[header], row[header].padText);
+      if(row[header].padText) {
+        row[header].text = padAroundStringWithSpaces(row[header].text, maxLengthOfTextInHeader[header], row[header].extraPadding);
       }
     });
   });

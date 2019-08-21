@@ -66,9 +66,9 @@ module.exports = {
       }
 
       pods.push({
-        name: { text: item.metadata.name },
+        name: { text: item.metadata.name, isSelector: true },
         ready: { text: `${readyContainers}/${item.spec.containers.length}` },
-        status: { text: podPhaseOrReason, ...colorCodeStatus(itemStatus.phase), padText: 2 },
+        status: { text: podPhaseOrReason, ...colorCodeStatus(itemStatus.phase), padText: true, extraPadding: 2 },
         restarts: { text: restartCount },
         age: {
           text: timeAgo.format(item.status.startTime, { flavour: 'tiny' })
