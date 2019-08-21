@@ -12,6 +12,7 @@ class Pods extends Component {
     super(props);
     this.state = { pods: [], err: '' };
     this.timer;
+    this.willComponentUnmount = false;
   }
 
   componentWillUpdate(nextProps) {
@@ -24,6 +25,7 @@ class Pods extends Component {
     if(this.timer) {
       clearInterval(this.timer);
     }
+    this.isComponentUnmounted = true;
   }
 
   listenForChanges(namespace) {
@@ -32,11 +34,13 @@ class Pods extends Component {
     }
     
     this.timer = setInterval(() => {
-      k8sApi.listNamespacedPod(namespace).then(response => {
-        this.setState({ pods: transformPodData(response.body.items) });
-      }).catch(err => {
-        this.setState({ ...this.state, err: err.code });
-      });
+      if(!this.isComponentUnmounted) {
+        k8sApi.listNamespacedPod(namespace).then(response => {
+          this.setState({ pods: transformPodData(response.body.items) });
+        }).catch(err => {
+          this.setState({ ...this.state, err: err.code });
+        });
+      }
     }, 500);
   }
 
