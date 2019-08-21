@@ -13,8 +13,9 @@ const findMaxLengthText = (array, header) => {
   let maxLength = header.length;
 
   array.forEach(element => {
-    if(element[header].text.length > maxLength) {
-      maxLength = element[header].text.length;
+    const text = new String(element[header].text);
+    if(text.trim().length > maxLength) {
+      maxLength = text.trim().length;
     }
   });
 
@@ -36,8 +37,9 @@ const emptySpaces = (noOfSpaces) => {
  * @param {number} noOfSpaces number of spaces that is to be padded around the text
  */
 const padAroundStringWithSpaces = (string, noOfSpaces, extraSpace = 0) => {
-  const spaceAtOneEnd = Math.ceil((noOfSpaces - string.length) / 2) + extraSpace;
-  const paddedText = `${emptySpaces(spaceAtOneEnd)}${string}${emptySpaces(spaceAtOneEnd)}`;
+  const text = new String(string);
+  const spaceAtOneEnd = Math.ceil((noOfSpaces - text.length) / 2) + extraSpace;
+  const paddedText = `${emptySpaces(spaceAtOneEnd)}${text}${emptySpaces(spaceAtOneEnd)}`;
 
   return paddedText;
 }
