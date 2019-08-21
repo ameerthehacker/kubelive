@@ -25,7 +25,7 @@ class Pods extends Component {
     if(this.timer) {
       clearInterval(this.timer);
     }
-    this.isComponentUnmounted = true;
+    this.willComponentUnmount = true;
   }
 
   listenForChanges(namespace) {
@@ -34,7 +34,7 @@ class Pods extends Component {
     }
     
     this.timer = setInterval(() => {
-      if(!this.isComponentUnmounted) {
+      if(!this.willComponentUnmount) {
         k8sApi.listNamespacedPod(namespace).then(response => {
           this.setState({ pods: transformPodData(response.body.items) });
         }).catch(err => {
