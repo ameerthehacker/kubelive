@@ -21,6 +21,12 @@ class Pods extends Component {
     }
   }
 
+  setStateSefely(state) {
+    if(!this.willComponentUnmount) {
+      this.setState(state);
+    }
+  }
+
   componentWillUnmount() {
     if(this.timer) {
       clearInterval(this.timer);
@@ -34,13 +40,11 @@ class Pods extends Component {
     }
     
     this.timer = setInterval(() => {
-      if(!this.willComponentUnmount) {
-        k8sApi.listNamespacedPod(namespace).then(response => {
-          this.setState({ pods: transformPodData(response.body.items) });
-        }).catch(err => {
-          this.setState({ ...this.state, err: err.code });
-        });
-      }
+      k8sApi.listNamespacedPod(namespace).then(response => {
+        this.setStateSefely({ pods: transformPodData(response.body.items) });
+      }).catch(err => {
+        this.setStateSefely({ ...this.state, err: err.code });
+      });
     }, 500);
   }
 
