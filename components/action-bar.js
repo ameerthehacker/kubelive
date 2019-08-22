@@ -6,6 +6,7 @@ const PropTypes = require('prop-types');
 class ActionBar extends Component  {
   constructor(props) {
     super(props);
+    this.keyPressListeners = [];
   }
 
   getAvailableActions() {
@@ -18,14 +19,27 @@ class ActionBar extends Component  {
     return availableActions;
   }
 
+  createkeyPressListener(action) {
+    return (chunk, key) => {
+      if(key.name == action.key) {
+        this.props.onActionPerformed(key);
+      }
+    }
+  };
+
   componentDidMount() {
     this.props.actions.forEach(action => {
-      // TODO: fix bug too many listeners being created
-      process.stdin.on('keypress', (chunk, key) => {
-        if(action.key == key.name) {
-          this.props.onActionPerformed(key);
-        }
-      });
+      const keyPressListener = this.createkeyPressListener(action);
+
+      this.keyPressListeners.push(keyPressListener);
+      process.stdin.on('keypress', keyPressListener);
+    });
+  }
+
+  componentWillUnmount() {
+    // Remove all listeners added by this component
+    this.keyPressListeners.forEach(keyPressListener => {
+      process.stdin.removeListener('keypress', keyPressListener);
     });
   }
 
