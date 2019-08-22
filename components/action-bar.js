@@ -20,6 +20,7 @@ class ActionBar extends Component  {
 
   componentDidMount() {
     this.props.actions.forEach(action => {
+      // TODO: fix bug too many listeners being created
       process.stdin.on('keypress', (chunk, key) => {
         if(action.key == key.name) {
           this.props.onActionPerformed(key);

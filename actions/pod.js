@@ -17,6 +17,7 @@ const actions = [
 
 const executeAction = async (key, name) => {
   if(key.name == 'd') {
+    // TODO: fix time being hard coding
     k8sApi.deleteNamespacedPod(name, 'kube-system');
   }
 }
