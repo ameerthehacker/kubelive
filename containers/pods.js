@@ -50,7 +50,7 @@ class Pods extends Component {
 
   render() {
     if(!this.state.err) {
-      return <PodsComponent pods={this.state.pods} />;
+      return <PodsComponent pods={this.state.pods} namespace={this.props.namespace} />;
     }
     else {
       return <Color red>Unable to connect to the kube cluster: {this.state.err}</Color>

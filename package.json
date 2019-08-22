@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@kubernetes/client-node": "^0.10.2",
+    "clipboardy": "^2.1.0",
     "import-jsx": "^3.0.0",
     "ink": "^2.3.0",
     "ink-tab": "^2.1.3",

@@ -1,4 +1,5 @@
 const k8sApi = require('../kube-api');
+const clipboardy = require('clipboardy');
 
 const actions = [
   {
@@ -15,10 +16,14 @@ const actions = [
   }
 ];
 
-const executeAction = async (key, name) => {
+const executeAction = (key, name, namespace) => {
   if(key.name == 'd') {
-    // TODO: fix time being hard coding
-    k8sApi.deleteNamespacedPod(name, 'kube-system');
+    k8sApi.deleteNamespacedPod(name, namespace)
+    //TODO: show the error somewhere
+    .catch(err => {});
+  }
+  else if(key.name == 'c') {
+    clipboardy.writeSync(name);
   }
 }
 

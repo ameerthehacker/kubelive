@@ -184,7 +184,7 @@ class TableComponent extends React.Component  {
     return <React.Fragment>
       <ActionBar actions={this.props.actions} onActionPerformed={(key) => {
         if(this.props.onActionPerformed) {
-          this.props.onActionPerformed({ key, name: this.selectedText });
+          this.props.onActionPerformed({ key, name: this.selectedText, namespace: this.props.namespace });
         }
       }} />
       <Box flexDirection="row">
@@ -201,7 +201,8 @@ TableComponent.propTypes = {
   data: PropTypes.array.isRequired,
   cellSpacing: PropTypes.number,
   actions: PropTypes.array,
-  onActionPerformed: PropTypes.func
+  onActionPerformed: PropTypes.func,
+  namespace: PropTypes.string.isRequired
 };
 
 module.exports = TableComponent;
