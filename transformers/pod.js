@@ -38,18 +38,17 @@ module.exports = {
     for(let i = 0; i < items.length; i++) {
       let podPhaseOrReason;
       const item = items[i];
+      const itemStatus = item.status;
 
       // workaround for missing terminating phase in kube api
       if(item.metadata.deletionTimestamp) {
         itemStatus.phase = 'Terminating';
       }
 
-      const itemStatus = item.status;
-
       podPhaseOrReason = itemStatus.phase;
-
+      
       // update only if there are any reasons to present
-      if(itemStatus.reason) {
+      if(itemStatus.phase == 'Failed' && itemStatus.reason) {
         podPhaseOrReason = itemStatus.reason;
       }
 
@@ -64,11 +63,11 @@ module.exports = {
           restartCount += containerStatus.restartCount;
         });
       }
-
+      
       pods.push({
         name: { text: item.metadata.name, isSelector: true },
         ready: { text: `${readyContainers}/${item.spec.containers.length}` },
-        status: { text: podPhaseOrReason, ...colorCodeStatus(itemStatus.phase), padText: true, extraPadding: 2 },
+        status: { text: podPhaseOrReason, ...colorCodeStatus(itemStatus.phase), padText: true, extraPadding: 2  },
         restarts: { text: restartCount },
         age: {
           text: timeAgo.format(item.status.startTime, { flavour: 'tiny' })

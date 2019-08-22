@@ -2,6 +2,8 @@ const React = require('react');
 const { Color } = require('ink');
 const { Box } = require('ink');
 const PropTypes = require('prop-types');
+const importJsx = require('import-jsx');
+const ActionBar = importJsx('../components/action-bar');
 
 const SelectionHighlighterComponent = ({ content, isSelected }) => {
   if(isSelected) {
@@ -22,6 +24,7 @@ class TableComponent extends React.Component  {
   constructor(props) {
     super(props);
     this.state = { selectedIndex: 0 }
+    this.selectedText = '';
   }
 
   componentDidMount() {
@@ -148,6 +151,11 @@ class TableComponent extends React.Component  {
       tableHeaderTexts.forEach((header, columnIndex) => {
         const isSelected = (row[header].isSelector && rowIndex == this.state.selectedIndex)? true: false;
         const tableContentTextRef = this.colorizeText(row[header], maxLengthOfTextInHeader[header]);
+
+        // Update selected text
+        if(isSelected) {
+          this.selectedText = row[header].text;
+        }
         
         tableContent.push(
           <Box key={columnIndex} width={maxLengthOfTextInHeader[header] + cellSpacing}>
@@ -174,6 +182,11 @@ class TableComponent extends React.Component  {
     });
   
     return <React.Fragment>
+      <ActionBar actions={this.props.actions} onActionPerformed={(key) => {
+        if(this.props.onActionPerformed) {
+          this.props.onActionPerformed({ key, name: this.selectedText });
+        }
+      }} />
       <Box flexDirection="row">
         {tableHeader}
       </Box>
@@ -186,7 +199,9 @@ class TableComponent extends React.Component  {
 
 TableComponent.propTypes = {
   data: PropTypes.array.isRequired,
-  cellSpacing: PropTypes.number
+  cellSpacing: PropTypes.number,
+  actions: PropTypes.array,
+  onActionPerformed: PropTypes.func
 };
 
 module.exports = TableComponent;
