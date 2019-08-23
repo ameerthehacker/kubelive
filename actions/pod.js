@@ -13,17 +13,17 @@ const actions = [
 ];
 
 const executeAction = (key, name, namespace) => {
-  if(key.name == 'd') {
-    k8sApi.deleteNamespacedPod(name, namespace)
-    //TODO: show the error somewhere
-    .catch(err => {});
-  }
-  else if(key.name == 'c') {
+  if (key.name == 'd') {
+    k8sApi
+      .deleteNamespacedPod(name, namespace)
+      //TODO: show the error somewhere
+      .catch((err) => {});
+  } else if (key.name == 'c') {
     clipboardy.writeSync(name);
   }
-}
+};
 
 module.exports = {
   actions,
   executeAction
-}
+};

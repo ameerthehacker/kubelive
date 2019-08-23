@@ -6,38 +6,40 @@ const importJsx = require('import-jsx');
 const ActionBar = importJsx('../components/action-bar');
 
 const SelectionHighlighterComponent = ({ content, isSelected }) => {
-  if(isSelected) {
-    return <Color bgBlue white>
-            {content}
-          </Color>;
-  }
-  else {
+  if (isSelected) {
+    return (
+      <Color bgBlue white>
+        {content}
+      </Color>
+    );
+  } else {
     return <React.Fragment>{content}</React.Fragment>;
   }
-}
+};
 
 SelectionHighlighterComponent.propTypes = {
   content: PropTypes.any.isRequired,
   isSelected: PropTypes.bool.isRequired
 };
-class TableComponent extends React.Component  {
+class TableComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { selectedIndex: 0 }
+    this.state = { selectedIndex: 0 };
     this.selectedText = '';
   }
 
   componentDidMount() {
     process.stdin.on('keypress', (chunk, key) => {
-      if(this.props.data.length > 0) {
-        if(key.name == 'down') {
-          this.setState({ selectedIndex: (this.state.selectedIndex + 1) % this.props.data.length });
-        }
-        else if(key.name == 'up') {
-          if(this.state.selectedIndex == 0) {
+      if (this.props.data.length > 0) {
+        if (key.name == 'down') {
+          this.setState({
+            selectedIndex:
+              (this.state.selectedIndex + 1) % this.props.data.length
+          });
+        } else if (key.name == 'up') {
+          if (this.state.selectedIndex == 0) {
             this.setState({ selectedIndex: this.props.data.length - 1 });
-          }
-          else {
+          } else {
             this.setState({ selectedIndex: this.state.selectedIndex - 1 });
           }
         }
@@ -46,18 +48,17 @@ class TableComponent extends React.Component  {
   }
 
   componentWillUpdate(nextProps) {
-    if(this.props.namespace != nextProps.namespace) {
+    if (this.props.namespace != nextProps.namespace) {
       this.state.selectedIndex = 0;
 
-      if(nextProps.data.length > 0)
-        // This is to prevent improper selected index when an item gets deleted
-        if(this.selectedIndex > nextProps.data.length) {
+      if (nextProps.data.length > 0)
+        if (this.selectedIndex > nextProps.data.length) {
+          // This is to prevent improper selected index when an item gets deleted
           this.selectedIndex = this.selectedIndex % nextProps.data.length;
         }
-      }
-      else {
-        this.selectedIndex = 0;
-      }
+    } else {
+      this.selectedIndex = 0;
+    }
   }
 
   /**
@@ -66,12 +67,12 @@ class TableComponent extends React.Component  {
    * @param {*} header key of the object for which the max length its value in the entire array is to be found
    * @returns key value pair of header and its length of its max length string in the entire array
    */
-  findMaxLengthText (array, header) {
+  findMaxLengthText(array, header) {
     let maxLength = header.length;
 
-    array.forEach(element => {
+    array.forEach((element) => {
       const text = new String(element[header].text);
-      if(text.trim().length > maxLength) {
+      if (text.trim().length > maxLength) {
         maxLength = text.trim().length;
       }
     });
@@ -95,8 +96,11 @@ class TableComponent extends React.Component  {
    */
   padAroundStringWithSpaces(string, noOfSpaces, extraSpace = 0) {
     const text = new String(string);
-    const spaceAtOneEnd = Math.ceil((noOfSpaces - text.length) / 2) + extraSpace;
-    const paddedText = `${this.emptySpaces(spaceAtOneEnd)}${text}${this.emptySpaces(spaceAtOneEnd)}`;
+    const spaceAtOneEnd =
+      Math.ceil((noOfSpaces - text.length) / 2) + extraSpace;
+    const paddedText = `${this.emptySpaces(
+      spaceAtOneEnd
+    )}${text}${this.emptySpaces(spaceAtOneEnd)}`;
 
     return paddedText;
   }
@@ -107,20 +111,19 @@ class TableComponent extends React.Component  {
    * @returns string content wrapped in Color component with specified font and background colors
    */
   colorizeText(content) {
-    if(content.color == undefined && content.bgColor == undefined) {
+    if (content.color == undefined && content.bgColor == undefined) {
       return content.text;
-    }
-    else {
+    } else {
       const props = {};
 
-      if(content.color != undefined) {
+      if (content.color != undefined) {
         props[content.color] = true;
-      } 
-      if(content.bgColor != undefined) {
-        props['bgKeyword'] = content.bgColor; 
+      }
+      if (content.bgColor != undefined) {
+        props['bgKeyword'] = content.bgColor;
       }
 
-      return <Color {...props}>{content.text}</Color>
+      return <Color {...props}>{content.text}</Color>;
     }
   }
 
@@ -128,82 +131,99 @@ class TableComponent extends React.Component  {
     const data = this.props.data;
     let cellSpacing = this.props.cellSpacing;
 
-    if(!data || data.length == 0) {
-      return "";
+    if (!data || data.length == 0) {
+      return '';
     }
     const tableHeaderTexts = Object.keys(data[0]);
     const maxLengthOfTextInHeader = {};
-  
+
     // Default cell spacing of 5
-    if(!cellSpacing) {
+    if (!cellSpacing) {
       cellSpacing = 5;
     }
-  
-    tableHeaderTexts.forEach(header => {
+
+    tableHeaderTexts.forEach((header) => {
       maxLengthOfTextInHeader[header] = this.findMaxLengthText(data, header);
     });
-  
+
     // Pad texts with spaces if needed
-    data.forEach(row => {
-      tableHeaderTexts.forEach(header => {
-        // Pad text specifies extra space that is to the cell 
-        if(row[header].padText) {
-          row[header].text = this.padAroundStringWithSpaces(row[header].text, maxLengthOfTextInHeader[header], row[header].extraPadding);
+    data.forEach((row) => {
+      tableHeaderTexts.forEach((header) => {
+        // Pad text specifies extra space that is to the cell
+        if (row[header].padText) {
+          row[header].text = this.padAroundStringWithSpaces(
+            row[header].text,
+            maxLengthOfTextInHeader[header],
+            row[header].extraPadding
+          );
         }
       });
     });
-  
+
     const tableContent = data.map((row, rowIndex) => {
       const tableContent = [];
-  
+
       tableHeaderTexts.forEach((header, columnIndex) => {
-        const isSelected = (row[header].isSelector && rowIndex == this.state.selectedIndex)? true: false;
-        const tableContentTextRef = this.colorizeText(row[header], maxLengthOfTextInHeader[header]);
+        const isSelected =
+          row[header].isSelector && rowIndex == this.state.selectedIndex
+            ? true
+            : false;
+        const tableContentTextRef = this.colorizeText(
+          row[header],
+          maxLengthOfTextInHeader[header]
+        );
 
         // Update selected text
-        if(isSelected) {
+        if (isSelected) {
           this.selectedText = row[header].text;
         }
-        
+
         tableContent.push(
-          <Box key={columnIndex} width={maxLengthOfTextInHeader[header] + cellSpacing}>
-            <SelectionHighlighterComponent content={tableContentTextRef} isSelected={isSelected} />
+          <Box
+            key={columnIndex}
+            width={maxLengthOfTextInHeader[header] + cellSpacing}
+          >
+            <SelectionHighlighterComponent
+              content={tableContentTextRef}
+              isSelected={isSelected}
+            />
           </Box>
         );
       });
-  
-      return (
-        <Box key={rowIndex}>
-          {tableContent}
-        </Box>
-      );
+
+      return <Box key={rowIndex}>{tableContent}</Box>;
     });
-  
+
     const tableHeader = [];
-  
+
     tableHeaderTexts.forEach((header, index) => {
       tableHeader.push(
         <Box key={index} width={maxLengthOfTextInHeader[header] + cellSpacing}>
           <Color green>{header.toUpperCase()}</Color>
         </Box>
-      )
+      );
     });
-  
-    return <React.Fragment>
-      <ActionBar actions={this.props.actions} onActionPerformed={(key) => {
-        if(this.props.onActionPerformed) {
-          this.props.onActionPerformed({ key, name: this.selectedText, namespace: this.props.namespace });
-        }
-      }} />
-      <Box flexDirection="row">
-        {tableHeader}
-      </Box>
-      <Box flexDirection="column">
-        {tableContent}
-      </Box>
-    </React.Fragment>
+
+    return (
+      <React.Fragment>
+        <ActionBar
+          actions={this.props.actions}
+          onActionPerformed={(key) => {
+            if (this.props.onActionPerformed) {
+              this.props.onActionPerformed({
+                key,
+                name: this.selectedText,
+                namespace: this.props.namespace
+              });
+            }
+          }}
+        />
+        <Box flexDirection="row">{tableHeader}</Box>
+        <Box flexDirection="column">{tableContent}</Box>
+      </React.Fragment>
+    );
   }
-};
+}
 
 TableComponent.propTypes = {
   data: PropTypes.array.isRequired,

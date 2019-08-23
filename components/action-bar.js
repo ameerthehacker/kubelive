@@ -3,7 +3,7 @@ const { Component } = require('react');
 const { Color, Box } = require('ink');
 const PropTypes = require('prop-types');
 
-class ActionBar extends Component  {
+class ActionBar extends Component {
   constructor(props) {
     super(props);
     this.keyPressListeners = [];
@@ -12,8 +12,10 @@ class ActionBar extends Component  {
   getAvailableActions() {
     let availableActions = '';
 
-    this.props.actions.forEach(action => {
-      availableActions += `[${action.key.toUpperCase()}]: ${action.description} `;
+    this.props.actions.forEach((action) => {
+      availableActions += `[${action.key.toUpperCase()}]: ${
+        action.description
+      } `;
     });
 
     return availableActions;
@@ -21,14 +23,14 @@ class ActionBar extends Component  {
 
   createkeyPressListener(action) {
     return (chunk, key) => {
-      if(key.name == action.key) {
+      if (key.name == action.key) {
         this.props.onActionPerformed(key);
       }
-    }
-  };
+    };
+  }
 
   componentDidMount() {
-    this.props.actions.forEach(action => {
+    this.props.actions.forEach((action) => {
       const keyPressListener = this.createkeyPressListener(action);
 
       this.keyPressListeners.push(keyPressListener);
@@ -38,26 +40,27 @@ class ActionBar extends Component  {
 
   componentWillUnmount() {
     // Remove all listeners added by this component
-    this.keyPressListeners.forEach(keyPressListener => {
+    this.keyPressListeners.forEach((keyPressListener) => {
       process.stdin.removeListener('keypress', keyPressListener);
     });
   }
 
   render() {
-    if(this.props.actions.length > 0) {
-      return <Box marginTop={1} marginBottom={1} width="100%">
-        <Color yellow>{this.getAvailableActions()}</Color>
-      </Box>;
-    }
-    else {
+    if (this.props.actions.length > 0) {
+      return (
+        <Box marginTop={1} marginBottom={1} width="100%">
+          <Color yellow>{this.getAvailableActions()}</Color>
+        </Box>
+      );
+    } else {
       return '';
     }
   }
-};
+}
 
 ActionBar.propTypes = {
   actions: PropTypes.array.isRequired,
   onActionPerformed: PropTypes.func.isRequired
-}
+};
 
 module.exports = ActionBar;

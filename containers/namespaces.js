@@ -13,32 +13,43 @@ class Namespaces extends Component {
   }
 
   componentDidMount() {
-    k8sApi.listNamespace().then(response => {
-      const namespaces = response.body.items;
+    k8sApi
+      .listNamespace()
+      .then((response) => {
+        const namespaces = response.body.items;
 
-      this.setState({ namespaces: namespaces });
-      
-      // Trigger a first available namespace
-      if(namespaces.length > 0) {
-        this.props.onNamespaceChange(namespaces[0].metadata.name);
-      }
-    }).catch(err => {
-      this.setState({ ...this.state, err: err.code });
-    });
+        this.setState({ namespaces: namespaces });
+
+        // Trigger a first available namespace
+        if (namespaces.length > 0) {
+          this.props.onNamespaceChange(namespaces[0].metadata.name);
+        }
+      })
+      .catch((err) => {
+        this.setState({ ...this.state, err: err.code });
+      });
   }
 
   render() {
-    if(!this.state.err) {
-      return <NamespacesComponent onNamespaceChange={this.props.onNamespaceChange} namespaces={this.state.namespaces} />;
-    }
-    else {
-      return <Color red>Unable to connect to the kube cluster: {this.state.err}</Color>
+    if (!this.state.err) {
+      return (
+        <NamespacesComponent
+          onNamespaceChange={this.props.onNamespaceChange}
+          namespaces={this.state.namespaces}
+        />
+      );
+    } else {
+      return (
+        <Color red>
+          Unable to connect to the kube cluster: {this.state.err}
+        </Color>
+      );
     }
   }
 }
 
 Namespaces.propTypes = {
-  onNamespaceChange: PropTypes.func  
-}
+  onNamespaceChange: PropTypes.func
+};
 
 module.exports = Namespaces;

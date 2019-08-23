@@ -16,44 +16,55 @@ class Pods extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if(this.props.namespace != nextProps.namespace && !this.state.err) {
+    if (this.props.namespace != nextProps.namespace && !this.state.err) {
       this.listenForChanges(nextProps.namespace);
     }
   }
 
   setStateSefely(state) {
-    if(!this.willComponentUnmount) {
+    if (!this.willComponentUnmount) {
       this.setState(state);
     }
   }
 
   componentWillUnmount() {
-    if(this.timer) {
+    if (this.timer) {
       clearInterval(this.timer);
     }
     this.willComponentUnmount = true;
   }
 
   listenForChanges(namespace) {
-    if(this.timer) {
+    if (this.timer) {
       clearInterval(this.timer);
     }
-    
+
     this.timer = setInterval(() => {
-      k8sApi.listNamespacedPod(namespace).then(response => {
-        this.setStateSefely({ pods: transformPodData(response.body.items) });
-      }).catch(err => {
-        this.setStateSefely({ ...this.state, err: err.code });
-      });
+      k8sApi
+        .listNamespacedPod(namespace)
+        .then((response) => {
+          this.setStateSefely({ pods: transformPodData(response.body.items) });
+        })
+        .catch((err) => {
+          this.setStateSefely({ ...this.state, err: err.code });
+        });
     }, 500);
   }
 
   render() {
-    if(!this.state.err) {
-      return <PodsComponent pods={this.state.pods} namespace={this.props.namespace} />;
-    }
-    else {
-      return <Color red>Unable to connect to the kube cluster: {this.state.err}</Color>
+    if (!this.state.err) {
+      return (
+        <PodsComponent
+          pods={this.state.pods}
+          namespace={this.props.namespace}
+        />
+      );
+    } else {
+      return (
+        <Color red>
+          Unable to connect to the kube cluster: {this.state.err}
+        </Color>
+      );
     }
   }
 }

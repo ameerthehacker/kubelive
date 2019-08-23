@@ -3,7 +3,6 @@ const k8sApi = require('../../kube-api');
 const clipboardy = require('clipboardy');
 
 describe('executeAction()', () => {
-
   beforeEach(() => {
     k8sApi.deleteNamespacedPod = jest.fn().mockResolvedValue();
     clipboardy.writeSync = jest.fn().mockResolvedValue();
