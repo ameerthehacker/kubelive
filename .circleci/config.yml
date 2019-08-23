@@ -34,3 +34,11 @@ jobs:
       - run:
           name: Run tests
           command: yarn test
+
+      - run:
+          name: Generate coverage report
+          command: yarn coverage        
+
+      - run: 
+          name: Upload coverage report
+          command: ./node_modules/codecov/bin/codecov        
