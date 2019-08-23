@@ -45,11 +45,19 @@ class TableComponent extends React.Component  {
     });
   }
 
-  // TODO: refactor this dirty workaround
   componentWillUpdate(nextProps) {
-    if(this.props.data.length != nextProps.data.length) {
+    if(this.props.namespace != nextProps.namespace) {
       this.state.selectedIndex = 0;
-    }
+
+      if(nextProps.data.length > 0)
+        // This is to prevent improper selected index when an item gets deleted
+        if(this.selectedIndex > nextProps.data.length) {
+          this.selectedIndex = this.selectedIndex % nextProps.data.length;
+        }
+      }
+      else {
+        this.selectedIndex = 0;
+      }
   }
 
   /**
