@@ -1,13 +1,25 @@
-# Kubelive
+<h1 align="center">:sparkles: Kubelive</h1>
 
-[![CircleCI](https://img.shields.io/circleci/build/github/ameerthehacker/kubelive?style=flat-square&token=abc123def456)](https://circleci.com/gh/ameerthehacker/kubelive/tree/master)
-[![codecov](https://img.shields.io/codecov/c/github/ameerthehacker/kubelive?style=flat-square)](https://codecov.io/gh/ameerthehacker/kubelive)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![jest](https://img.shields.io/badge/tested%20with-jest-blue?style=flat-square)](https://jestjs.io/)
+<p align="center">
+<a href="https://circleci.com/gh/ameerthehacker/kubelive/tree/master">
+  <img alt="CircleCI" src="https://img.shields.io/circleci/build/github/ameerthehacker/kubelive?style=flat-square" />
+</a>
+<a href="https://codecov.io/gh/ameerthehacker/kubelive">
+  <img alt="codecov" src="https://img.shields.io/codecov/c/github/ameerthehacker/kubelive?style=flat-square" />
+</a>
+<a href="https://github.com/prettier/prettier">
+  <img alt="prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" />
+</a>
+<a href="https://jestjs.io/">
+  <img alt="jest" src="https://img.shields.io/badge/tested%20with-jest-blue?style=flat-square" />
+</a>
 
-Kubernetes command line tool to provide live data about the cluster and it's resources
-
-![Demo](./screenshots/kubelive-demo.gif)
+<p align="center">
+  Kubernetes command line tool to provide live data about the cluster and it's resources
+</p>
+<p align="center">
+  <img alt="Demo" src="./screenshots/kubelive-demo.gif" />
+</p>
 
 :rotating_light: This repo is in active development
 
