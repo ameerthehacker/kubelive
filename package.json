@@ -7,7 +7,8 @@
     "start": "node main.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "prettify": "prettier --write"
   },
   "repository": "https://github.com/ameerthehacker/kubelive.git",
   "author": "ameerthehacker",
@@ -25,7 +26,9 @@
   },
   "devDependencies": {
     "codecov": "^3.5.0",
+    "husky": "^3.0.4",
     "jest": "^24.9.0",
+    "lint-staged": "^9.2.3",
     "prettier": "^1.18.2"
   }
 }

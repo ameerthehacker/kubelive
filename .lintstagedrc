@@ -1,0 +1,6 @@
+{
+  "*.{js,ts,html,json,scss,md,yml}": [
+      "yarn prettify",
+      "git add"
+  ]
+}
