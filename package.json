@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage"
   },
   "repository": "https://github.com/ameerthehacker/kubelive.git",
   "author": "ameerthehacker",
