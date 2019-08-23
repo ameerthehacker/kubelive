@@ -17,7 +17,7 @@ const executeAction = (key, name, namespace) => {
     k8sApi
       .deleteNamespacedPod(name, namespace)
       //TODO: show the error somewhere
-      .catch((err) => {});
+      .catch(() => {});
   } else if (key.name == 'c') {
     clipboardy.writeSync(name);
   }

@@ -47,19 +47,25 @@ class TableComponent extends React.Component {
     });
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.namespace != nextProps.namespace) {
-      this.state.selectedIndex = 0;
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.namespace != prevProps.namespace) {
+      this.setState({ ...this.state, selectedIndex: 0 });
 
-      if (nextProps.data.length > 0)
-        if (this.selectedIndex > nextProps.data.length) {
+      if (this.props.data.length > 0)
+        if (this.state.selectedIndex > this.props.data.length) {
           // This is to prevent improper selected index when an item gets deleted
-          this.selectedIndex = this.selectedIndex % nextProps.data.length;
+          const newSelectedIndex =
+            this.state.selectedIndex % this.props.data.length;
+          this.setState({ ...this.state, selectedIndex: newSelectedIndex });
         }
     } else {
       this.selectedIndex = 0;
     }
+
+    return null;
   }
+
+  componentDidUpdate() {}
 
   /**
    * For an array of [{ name: 'ameer', city: 'madurai' }, { name: 'bala', city: 'bengaluru' }] it returns { name: 5, city: 9 }

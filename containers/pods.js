@@ -15,17 +15,21 @@ class Pods extends Component {
     this.willComponentUnmount = false;
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.namespace != nextProps.namespace && !this.state.err) {
-      this.listenForChanges(nextProps.namespace);
-    }
-  }
-
   setStateSefely(state) {
     if (!this.willComponentUnmount) {
       this.setState(state);
     }
   }
+
+  getSnapshotBeforeUpdate(nextProps) {
+    if (this.props.namespace != nextProps.namespace && !this.state.err) {
+      this.listenForChanges(nextProps.namespace);
+    }
+
+    return null;
+  }
+
+  componentDidUpdate() {}
 
   componentWillUnmount() {
     if (this.timer) {
