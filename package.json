@@ -4,7 +4,8 @@
   "description": "Kubernetes command line tool to provide live data about the cluster and it's resources",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "test": "jest"
   },
   "repository": "https://github.com/ameerthehacker/kubelive.git",
   "author": "ameerthehacker",
@@ -19,5 +20,8 @@
     "javascript-time-ago": "^2.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }
