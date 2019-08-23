@@ -5,6 +5,14 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![jest](https://img.shields.io/badge/tested%20with-jest-blue?style=flat-square)](https://jestjs.io/)
 
+Kubernetes command line tool to provide live data about the cluster and it's resources
+
 ![Demo](./screenshots/kubelive-demo.gif)
 
-Kubernetes command line tool to provide live data about the cluster and it's resources
+:rotating_light: This repo is in active development
+
+Show your support by :star: the repo
+
+## License
+
+MIT © [Ameer Jhan](mailto:ameerjhanprof@gmail.com)
