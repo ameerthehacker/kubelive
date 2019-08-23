@@ -7,10 +7,6 @@ const actions = [
     description: 'Delete'
   },
   {
-    key: 'l',
-    description: 'Logs'
-  },
-  {
     key: 'c',
     description: 'Copy'
   }
