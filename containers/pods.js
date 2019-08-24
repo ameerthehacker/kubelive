@@ -21,9 +21,9 @@ class Pods extends Component {
     }
   }
 
-  getSnapshotBeforeUpdate(nextProps) {
-    if (this.props.namespace != nextProps.namespace && !this.state.err) {
-      this.listenForChanges(nextProps.namespace);
+  getSnapshotBeforeUpdate(prevProps) {
+    if (this.props.namespace != prevProps.namespace && !this.state.err) {
+      this.listenForChanges(this.props.namespace);
     }
 
     return null;
@@ -52,7 +52,7 @@ class Pods extends Component {
         .catch((err) => {
           this.setStateSefely({ ...this.state, err: err.code });
         });
-    }, 500);
+    }, 1000);
   }
 
   render() {
