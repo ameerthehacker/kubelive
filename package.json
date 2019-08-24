@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --config jest.config.json",
+    "test:watch": "jest --watch --config jest.config.json",
     "lint": "eslint . --ext .js --fix && :",
     "coverage": "jest --coverage",
     "prettify": "prettier --write"
