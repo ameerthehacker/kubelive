@@ -1,3 +1,5 @@
 {
-  "verbose": true
+  "verbose": true,
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
+  "setupFiles": ["./__test__/setupTests.js"]
 }
