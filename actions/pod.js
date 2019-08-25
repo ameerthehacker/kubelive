@@ -4,7 +4,8 @@ const clipboardy = require('clipboardy');
 const actions = [
   {
     key: 'd',
-    description: 'Delete'
+    description: 'Delete',
+    needsConfirmation: true
   },
   {
     key: 'c',
