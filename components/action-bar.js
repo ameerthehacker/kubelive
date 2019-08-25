@@ -22,7 +22,7 @@ class ActionBarComponent extends Component {
     return availableActions;
   }
 
-  createkeyPressListener(action) {
+  createKeyPressListener(action) {
     return (chunk, key) => {
       if (key.name == action.key && action.needsConfirmation) {
         this.setState({
@@ -52,7 +52,7 @@ class ActionBarComponent extends Component {
 
   componentDidMount() {
     this.props.actions.forEach((action) => {
-      const keyPressListener = this.createkeyPressListener(action);
+      const keyPressListener = this.createKeyPressListener(action);
 
       this.keyPressListeners.push(keyPressListener);
       process.stdin.on('keypress', keyPressListener);
