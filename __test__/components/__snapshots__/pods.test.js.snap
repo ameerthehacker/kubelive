@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PodsComponent should match the snapshot 1`] = `
+<TableComponent
+  actions={
+    Array [
+      Object {
+        "descrition": "Copy",
+        "key": "c",
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "name": "some-pod-name",
+      },
+    ]
+  }
+  namespace="some-name"
+  onActionPerformed={[Function]}
+/>
+`;
