@@ -4,7 +4,7 @@
     "git add"
   ],
   "*.{spec,js}": [
-    "yarn lint",
+    "yarn lint:staged",
     "git add"
   ],
 }
