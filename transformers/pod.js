@@ -70,7 +70,7 @@ const transformPodData = (items) => {
         text: podPhaseOrReason,
         ...colorCodeStatus(itemStatus.phase),
         padText: true,
-        extraPadding: 2
+        extraPadding: 1
       },
       restarts: { text: restartCount },
       age: {

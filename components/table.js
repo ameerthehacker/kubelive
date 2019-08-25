@@ -92,7 +92,7 @@ class TableComponent extends React.Component {
    * @returns string with specified number of spaces
    */
   emptySpaces(noOfSpaces) {
-    return new Array(noOfSpaces).join(' ');
+    return new Array(noOfSpaces + 1).join(' ');
   }
 
   /**
@@ -102,11 +102,13 @@ class TableComponent extends React.Component {
    */
   padAroundStringWithSpaces(string, noOfSpaces, extraSpace = 0) {
     const text = new String(string);
-    const spaceAtOneEnd =
-      Math.ceil((noOfSpaces - text.length) / 2) + extraSpace;
+    const diff = noOfSpaces - text.length;
+    const spaceAtOneEnd = Math.floor(diff / 2);
+    const remainingSpace = diff - spaceAtOneEnd * 2;
+
     const paddedText = `${this.emptySpaces(
-      spaceAtOneEnd
-    )}${text}${this.emptySpaces(spaceAtOneEnd)}`;
+      spaceAtOneEnd + extraSpace
+    )}${text}${this.emptySpaces(spaceAtOneEnd + remainingSpace + extraSpace)}`;
 
     return paddedText;
   }
