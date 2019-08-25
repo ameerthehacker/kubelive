@@ -14,10 +14,10 @@
     <img alt="jest" src="https://img.shields.io/badge/tested%20with-jest-blue?style=flat-square" />
   </a>
   <a href="https://codeclimate.com/github/ameerthehacker/kubelive/maintainability">
-    <img alt="jest" src="https://img.shields.io/codeclimate/maintainability-percentage/ameerthehacker/kubelive?style=flat-square" />
+    <img alt="code-climate-maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/ameerthehacker/kubelive?style=flat-square" />
   </a>
   <a href="https://codeclimate.com/github/ameerthehacker/kubelive/maintainability">
-    <img alt="jest" src="https://img.shields.io/codeclimate/issues/ameerthehacker/kubelive?style=flat-square" />
+    <img alt="code-climate-issues" src="https://img.shields.io/codeclimate/issues/ameerthehacker/kubelive?style=flat-square" />
   </a>
 </p>
 
