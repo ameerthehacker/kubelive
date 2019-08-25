@@ -1,5 +1,5 @@
 const { executeAction } = require('../../actions/pod');
-const k8sApi = require('../../kube-api');
+const k8sApi = require('../../kube/api');
 const clipboardy = require('clipboardy');
 
 describe('executeAction()', () => {

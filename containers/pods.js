@@ -1,4 +1,4 @@
-const k8sApi = require('../kube-api');
+const k8sApi = require('../kube/api');
 const React = require('react');
 const importJsx = require('import-jsx');
 const PodsComponent = importJsx('../components/pods');
