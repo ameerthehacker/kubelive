@@ -249,7 +249,7 @@ describe('ActionBarComponent', () => {
     it('should render available actions when not waiting for confirmation', () => {
       const availableActions = component.instance().getAvailableActions();
       component.setState({
-        ...component.state,
+        ...component.state(),
         waitingForConfirmation: false
       });
 
@@ -262,7 +262,7 @@ describe('ActionBarComponent', () => {
 
     it('should render Are you sure [Y/N]: when waiting for confirmation', () => {
       component.setState({
-        ...component.state,
+        ...component.state(),
         waitingForConfirmation: { key: { name: 'd' } }
       });
 
