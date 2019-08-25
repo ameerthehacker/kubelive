@@ -27,6 +27,9 @@
     "react": "^16.9.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.9.0",
     "codecov": "^3.5.0",
     "eslint": "^6.2.1",
     "eslint-plugin-react": "^7.14.3",
