@@ -1,5 +1,8 @@
+const React = require('react');
 const importJsx = require('import-jsx');
 const ActionBarComponent = importJsx('../../components/action-bar');
+const { shallow } = require('enzyme');
+const { Box, Color } = require('ink');
 
 describe('ActionBarComponent', () => {
   let actionBarComponent;
@@ -197,6 +200,76 @@ describe('ActionBarComponent', () => {
 
       // Assert
       expect(process.stdin.removeListener.mock.calls).toEqual(args);
+    });
+  });
+
+  // Testing the render
+  describe('render()', () => {
+    let component;
+    let boxComponent;
+    let colorComponent;
+
+    beforeEach(() => {
+      component = shallow(
+        <ActionBarComponent actions={actions} onActionPerformed={() => {}} />
+      );
+    });
+
+    it('should render nothing when there is no action', () => {
+      component = shallow(
+        <ActionBarComponent actions={[]} onActionPerformed={() => {}} />
+      );
+
+      expect(component.text()).toEqual('');
+    });
+
+    it('should match the snapshot', () => {
+      expect(component).toMatchSnapshot();
+    });
+
+    it('should render a box with marginTop as 1', () => {
+      boxComponent = component.find(Box).first();
+
+      expect(boxComponent.props().marginTop).toEqual(1);
+    });
+
+    it('should render a box with marginBottom as 1', () => {
+      boxComponent = component.find(Box).first();
+
+      expect(boxComponent.props().marginBottom).toEqual(1);
+    });
+
+    it('should render content inside the box as yellow colored', () => {
+      colorComponent = boxComponent.find(Color).first();
+
+      expect(colorComponent.props().yellow).toBeTruthy();
+    });
+
+    it('should render available actions when not waiting for confirmation', () => {
+      const availableActions = component.instance().getAvailableActions();
+      component.setState({
+        ...component.state,
+        waitingForConfirmation: false
+      });
+
+      component.update();
+
+      boxComponent = component.find(Box).first();
+      colorComponent = boxComponent.find(Color).first();
+      expect(colorComponent.childAt(0).text()).toEqual(availableActions);
+    });
+
+    it('should render Are you sure [Y/N]: when waiting for confirmation', () => {
+      component.setState({
+        ...component.state,
+        waitingForConfirmation: { key: { name: 'd' } }
+      });
+
+      component.update();
+
+      boxComponent = component.find(Box).first();
+      colorComponent = boxComponent.find(Color).first();
+      expect(colorComponent.childAt(0).text()).toEqual('Are you sure [Y/N]:');
     });
   });
 });
