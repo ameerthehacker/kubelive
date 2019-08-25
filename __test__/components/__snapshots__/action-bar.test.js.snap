@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` 1`] = `
-<Box
-  flexDirection="row"
-  flexGrow={0}
-  flexShrink={1}
-  marginBottom={1}
-  marginTop={1}
->
-  <Color
-    yellow={true}
-  >
-    [D]: Delete [C]: Copy 
-  </Color>
-</Box>
-`;
-
 exports[`ActionBarComponent render() should match the snapshot 1`] = `
 <Box
   flexDirection="row"
