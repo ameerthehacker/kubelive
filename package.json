@@ -9,7 +9,7 @@
     "test:watch": "jest --watch --config jest.config.json",
     "lint": "eslint . --ext .js --fix",
     "lint:staged": "eslint --fix",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage --config jest.config.json",
     "prettify": "prettier --write"
   },
   "repository": "https://github.com/ameerthehacker/kubelive.git",
