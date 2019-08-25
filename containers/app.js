@@ -2,9 +2,8 @@
 const React = require('react');
 const { Component } = require('react');
 const importJsx = require('import-jsx');
-const Namespaces = importJsx('../containers/namespaces');
-const Pods = importJsx('../containers/pods');
-const { render } = require('ink');
+const Namespaces = importJsx('./namespaces');
+const Pods = importJsx('./pods');
 
 class App extends Component {
   constructor(props) {
@@ -27,4 +26,4 @@ class App extends Component {
   }
 }
 
-render(<App />);
+module.exports = App;
