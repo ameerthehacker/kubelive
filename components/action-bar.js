@@ -1,6 +1,6 @@
 const React = require('react');
 const { Component } = require('react');
-const { Color, Box, Text } = require('ink');
+const { Color, Box } = require('ink');
 const PropTypes = require('prop-types');
 
 class ActionBar extends Component {
