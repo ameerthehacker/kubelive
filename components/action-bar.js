@@ -3,7 +3,7 @@ const { Component } = require('react');
 const { Color, Box } = require('ink');
 const PropTypes = require('prop-types');
 
-class ActionBar extends Component {
+class ActionBarComponent extends Component {
   constructor(props) {
     super(props);
     this.keyPressListeners = [];
@@ -83,9 +83,9 @@ class ActionBar extends Component {
   }
 }
 
-ActionBar.propTypes = {
+ActionBarComponent.propTypes = {
   actions: PropTypes.array.isRequired,
   onActionPerformed: PropTypes.func.isRequired
 };
 
-module.exports = ActionBar;
+module.exports = ActionBarComponent;

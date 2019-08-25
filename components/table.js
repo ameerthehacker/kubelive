@@ -3,7 +3,7 @@ const { Color } = require('ink');
 const { Box } = require('ink');
 const PropTypes = require('prop-types');
 const importJsx = require('import-jsx');
-const ActionBar = importJsx('../components/action-bar');
+const ActionBarComponent = importJsx('../components/action-bar');
 
 const SelectionHighlighterComponent = ({ content, isSelected }) => {
   if (isSelected) {
@@ -214,7 +214,7 @@ class TableComponent extends React.Component {
 
     return (
       <React.Fragment>
-        <ActionBar
+        <ActionBarComponent
           actions={this.props.actions}
           onActionPerformed={(key) => {
             if (this.props.onActionPerformed) {
