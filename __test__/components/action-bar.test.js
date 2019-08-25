@@ -1,3 +1,4 @@
+'use strict';
 const React = require('react');
 const importJsx = require('import-jsx');
 const ActionBarComponent = importJsx('../../components/action-bar');

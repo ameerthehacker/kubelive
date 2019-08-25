@@ -1,3 +1,4 @@
+'use strict';
 const React = require('react');
 const { Tab, Tabs } = require('ink-tab');
 const PropTypes = require('prop-types');

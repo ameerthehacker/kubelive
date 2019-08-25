@@ -1,3 +1,4 @@
+'use strict';
 const React = require('react');
 const { Color } = require('ink');
 const { Box } = require('ink');

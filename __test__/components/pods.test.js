@@ -1,3 +1,4 @@
+'use strict';
 const React = require('react');
 const { shallow } = require('enzyme');
 const executeActionMock = jest.fn();

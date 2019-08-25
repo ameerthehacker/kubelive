@@ -1,3 +1,4 @@
+'use strict';
 const k8sApi = require('../kube/api');
 const clipboardy = require('clipboardy');
 
