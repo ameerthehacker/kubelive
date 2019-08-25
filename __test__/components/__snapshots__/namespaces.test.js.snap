@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NamespacesComponent should match the snapshot 1`] = `
+<Tabs
+  keyMap={
+    Object {
+      "useNumbers": true,
+      "useTabs": true,
+    }
+  }
+  onChange={[Function]}
+>
+  <Tab
+    key="default"
+    name="default"
+  >
+    default
+  </Tab>
+  <Tab
+    key="kube-system"
+    name="kube-system"
+  >
+    kube-system
+  </Tab>
+</Tabs>
+`;
