@@ -3,7 +3,7 @@
     "yarn prettify",
     "git add"
   ],
-  "*.{spec,ts}": [
+  "*.{spec,js}": [
     "yarn lint",
     "git add"
   ],
