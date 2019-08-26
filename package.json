@@ -2,9 +2,9 @@
   "name": "kubelive",
   "version": "0.0.1",
   "description": "Kubernetes command line tool to provide live data about the cluster and it's resources",
-  "main": "main.js",
+  "main": "./bin/kubelive.js",
   "scripts": {
-    "start": "node main.js",
+    "start": "node ./bin/kubelive.js",
     "test": "jest --config jest.config.json",
     "test:watch": "jest --watch --config jest.config.json",
     "lint": "eslint . --ext .js --fix",
