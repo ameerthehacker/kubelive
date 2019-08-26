@@ -12,7 +12,8 @@ describe('App', () => {
   let namespaceContainer;
 
   beforeEach(() => {
-    container = shallow(<App />);
+    // TODO: fix the hard coded resource after writting additional tests
+    container = shallow(<App resource="pod" />);
     namespaceContainer = container.find(Namespaces).first();
   });
 
