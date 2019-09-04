@@ -10,7 +10,7 @@ const PropTypes = require('prop-types');
 class Namespaces extends Component {
   constructor(props) {
     super(props);
-    this.state = { namespaces: [], err: '' };
+    this.state = { namespaces: [], err: undefined };
   }
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class Namespaces extends Component {
   }
 
   render() {
-    if (!this.state.err) {
+    if (this.state.err == undefined) {
       return (
         <NamespacesComponent
           onNamespaceChange={this.props.onNamespaceChange}
