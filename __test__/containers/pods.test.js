@@ -1,7 +1,11 @@
 'use strict';
 const k8sApi = require('../../kube/api');
+const React = require('react');
+const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
 const Pods = importJsx('../../containers/pods');
+const PodsComponent = importJsx('../../components/pods');
+const { Color } = require('ink');
 const { transformPodData } = require('../../transformers/pod');
 jest.mock('../../transformers/pod', () => ({
   transformPodData: jest.fn()
@@ -11,7 +15,7 @@ describe('Pods', () => {
   let pods;
   let listNamespacedPodMock;
   let setStateMock;
-  const response = {
+  const podsResponse = {
     body: {
       items: [{ metadata: { name: 'pod1' } }, { metadata: { name: 'pod2' } }]
     }
@@ -20,7 +24,7 @@ describe('Pods', () => {
   beforeEach(() => {
     listNamespacedPodMock = k8sApi.listNamespacedPod = jest
       .fn()
-      .mockResolvedValue(response);
+      .mockResolvedValue(podsResponse);
     pods = new Pods({});
     pods.setState = setStateMock = jest.fn();
   });
@@ -159,7 +163,7 @@ describe('Pods', () => {
       pods.listenForChanges(namespace);
 
       listNamespacedPodMock().then(() => {
-        expect(transformPodData).toHaveBeenCalledWith(response.body.items);
+        expect(transformPodData).toHaveBeenCalledWith(podsResponse.body.items);
       });
     });
 
@@ -196,6 +200,52 @@ describe('Pods', () => {
             err: err.code
           });
         });
+    });
+  });
+});
+
+describe('Pods', () => {
+  const namespace = 'some-namespace';
+
+  describe('render()', () => {
+    it('should render the PodsComponent with namspace prop as this.props.namespace when there is no error', () => {
+      k8sApi.listNamespacedPod = jest.fn();
+
+      const podsContainer = shallow(<Pods namespace={namespace} />);
+
+      const podsComponent = podsContainer.find(PodsComponent).first();
+
+      expect(podsComponent.props().namespace).toEqual(namespace);
+    });
+
+    it('should render the PodsComponent with pods prop as this.state.pods when there is no error', () => {
+      k8sApi.listNamespacedPod = jest.fn();
+
+      const podsContainer = shallow(<Pods namespace={namespace} />);
+      podsContainer.setState({
+        ...podsContainer.state(),
+        pods: [{ name: 'pod1' }]
+      });
+      podsContainer.update();
+
+      const podsComponent = podsContainer.find(PodsComponent).first();
+
+      expect(podsComponent.props().pods).toEqual(podsContainer.state().pods);
+    });
+
+    it('should render the color component with error when there is an error', () => {
+      expect.assertions(1);
+      k8sApi.listNamespacedPod = jest.fn();
+      const errCode = 'ENOTFOUND';
+      const podsContainer = shallow(<Pods namespace={namespace} />);
+
+      podsContainer.setState({
+        err: errCode
+      });
+
+      podsContainer.update();
+      const colorComponent = podsContainer.find(Color).first();
+      expect(colorComponent.render().text()).toContain(errCode);
     });
   });
 });
