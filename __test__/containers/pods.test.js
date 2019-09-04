@@ -234,7 +234,6 @@ describe('Pods', () => {
     });
 
     it('should render the color component with error when there is an error', () => {
-      expect.assertions(1);
       k8sApi.listNamespacedPod = jest.fn();
       const errCode = 'ENOTFOUND';
       const podsContainer = shallow(<Pods namespace={namespace} />);

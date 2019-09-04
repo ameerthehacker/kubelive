@@ -104,11 +104,9 @@ describe('Namespaces', () => {
 
   it('should return error with red color when the promise fails', () => {
     expect.assertions(1);
-    const listNamespaceMock = jest.fn().mockReturnValue(
-      Promise.reject({
-        code: 'ENOTFOUND'
-      })
-    );
+    const listNamespaceMock = jest.fn().mockRejectedValue({
+      code: 'ENOTFOUND'
+    });
     const namespaces = createNamespaceContainer({}, listNamespaceMock);
 
     listNamespaceMock()
