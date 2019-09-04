@@ -14,6 +14,17 @@ const createNamespaceContainer = (props, listNamespaceMock) => {
 };
 
 describe('Namespaces', () => {
+  it('should match the snapshot', () => {
+    const listNamespaceMock = jest.fn().mockResolvedValue({
+      body: {
+        items: []
+      }
+    });
+    const namespaces = createNamespaceContainer({}, listNamespaceMock);
+
+    expect(namespaces).toMatchSnapshot();
+  });
+
   it('should call k8Api.listNamespace() when component mounts', () => {
     const listNamespaceMock = jest.fn().mockResolvedValue({
       body: {
