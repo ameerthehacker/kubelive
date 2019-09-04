@@ -35,7 +35,7 @@ describe('Pods', () => {
     it('should call this.setState only when the this.willComponentUnmount is false', () => {
       pods.willComponentUnmount = false;
 
-      pods.setStateSefely(state);
+      pods.setStateSafely(state);
 
       expect(setStateMock).toHaveBeenCalledWith(state);
     });
@@ -43,7 +43,7 @@ describe('Pods', () => {
     it('should not call this.setState only when the this.willComponentUnmount is true', () => {
       pods.willComponentUnmount = true;
 
-      pods.setStateSefely(state);
+      pods.setStateSafely(state);
 
       expect(setStateMock).not.toHaveBeenCalledWith(state);
     });
@@ -165,7 +165,7 @@ describe('Pods', () => {
 
     it('should call setStateSafely(pods) when there is no error', () => {
       expect.assertions(1);
-      const setStateSafelyMock = (pods.setStateSefely = jest.fn());
+      const setStateSafelyMock = (pods.setStateSafely = jest.fn());
       const transformPodDataResult = [{ name: 'pod1' }, { name: 'pod2' }];
       transformPodData.mockReturnValue(transformPodDataResult);
 
@@ -183,7 +183,7 @@ describe('Pods', () => {
       k8sApi.listNamespacedPod = jest.fn().mockRejectedValue({
         code: 'ENOTFOUND'
       });
-      const setStateSafelyMock = (pods.setStateSefely = jest.fn());
+      const setStateSafelyMock = (pods.setStateSafely = jest.fn());
 
       pods.listenForChanges(namespace);
 
