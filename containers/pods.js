@@ -16,7 +16,7 @@ class Pods extends Component {
     this.willComponentUnmount = false;
   }
 
-  setStateSefely(state) {
+  setStateSafely(state) {
     if (!this.willComponentUnmount) {
       this.setState(state);
     }
@@ -48,10 +48,10 @@ class Pods extends Component {
       k8sApi
         .listNamespacedPod(namespace)
         .then((response) => {
-          this.setStateSefely({ pods: transformPodData(response.body.items) });
+          this.setStateSafely({ pods: transformPodData(response.body.items) });
         })
         .catch((err) => {
-          this.setStateSefely({ ...this.state, err: err.code });
+          this.setStateSafely({ ...this.state, err: err.code });
         });
     }, 1000);
   }
