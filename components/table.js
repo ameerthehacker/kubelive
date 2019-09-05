@@ -53,14 +53,12 @@ class TableComponent extends React.Component {
       this.setState({ ...this.state, selectedIndex: 0 });
 
       if (this.props.data.length > 0)
-        if (this.state.selectedIndex > this.props.data.length) {
+        if (this.state.selectedIndex > this.props.data.length - 1) {
           // This is to prevent improper selected index when an item gets deleted
           const newSelectedIndex =
             this.state.selectedIndex % this.props.data.length;
           this.setState({ ...this.state, selectedIndex: newSelectedIndex });
         }
-    } else {
-      this.selectedIndex = 0;
     }
 
     return null;
