@@ -25,7 +25,7 @@
   Kubernetes command line tool to provide live data about the cluster and it's resources
 </p>
 <p align="center">
-  <img alt="Demo" src="https://github.com/ameerthehacker/project-assets/blob/master/kubelive/screenshots/kubelive-demo.gif?raw=true" />
+  <img alt="Demo" src="https://github.com/ameerthehacker/project-assets/blob/master/kubelive/screenshots/kubelive-demo-static.png?raw=true" />
 </p>
 
 :rotating_light: This repo is in active development
