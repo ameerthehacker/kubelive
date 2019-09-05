@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Kubernetes command line tool to provide live data about the cluster and it's resources",
   "main": "./bin/kubelive.js",
+  "bin": {
+    "kubelive": "./bin/kubelive.js"
+  },
   "scripts": {
     "start": "node ./bin/kubelive.js",
     "test": "jest --config jest.config.json",
