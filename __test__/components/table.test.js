@@ -13,9 +13,7 @@ describe('Table', () => {
 
   describe('componentDidMount()', () => {
     it('should respond to up key only when there is data', () => {
-      const tableComponent = createTableComponent({
-        data: []
-      });
+      const tableComponent = createTableComponent();
       process.stdin.on = jest.fn().mockImplementation((event, fn) => {
         fn(undefined, { name: 'up' });
       });
@@ -26,9 +24,7 @@ describe('Table', () => {
     });
 
     it('should respond to down key only when there is data', () => {
-      const tableComponent = createTableComponent({
-        data: []
-      });
+      const tableComponent = createTableComponent();
       process.stdin.on = jest.fn().mockImplementation((event, fn) => {
         fn(undefined, { name: 'down' });
       });
@@ -209,9 +205,7 @@ describe('Table', () => {
 
   describe('findMaxLengthText()', () => {
     it('should return the max length of string under each header', () => {
-      const tableComponent = createTableComponent({
-        data: []
-      });
+      const tableComponent = createTableComponent();
       const longestText = 'shanmugam';
       const array = [
         { name: { text: longestText } },
@@ -225,9 +219,7 @@ describe('Table', () => {
     });
 
     it('should length of the header if it is the lengthiest', () => {
-      const tableComponent = createTableComponent({
-        data: []
-      });
+      const tableComponent = createTableComponent();
       const text = 'shanmugam';
       const longestTextHeader = text + '-some-header';
       const array = [
@@ -275,7 +267,7 @@ describe('Table', () => {
 
   describe('padAroundStringWithSpaces()', () => {
     it('should not add any spaces if the noOfSpaces == string length', () => {
-      const tableComponent = createTableComponent({});
+      const tableComponent = createTableComponent();
       const text = 'something';
       const noOfSpaces = text.length;
 
@@ -285,7 +277,7 @@ describe('Table', () => {
     });
 
     it('should pad spaces / 2 at both ends if the noOfSpaces - text.length is divisible by 2', () => {
-      const tableComponent = createTableComponent({});
+      const tableComponent = createTableComponent();
       const text = 'something';
       const noOfSpaces = text.length + 2;
 
@@ -295,7 +287,7 @@ describe('Table', () => {
     });
 
     it('should pad spaces / 2 + 1 at the ends if the noOfSpaces - text.length is not divisible by 2', () => {
-      const tableComponent = createTableComponent({});
+      const tableComponent = createTableComponent();
       const text = 'something';
       const noOfSpaces = text.length + 3;
 
@@ -305,7 +297,7 @@ describe('Table', () => {
     });
 
     it('should pad extra spaces at both ends', () => {
-      const tableComponent = createTableComponent({});
+      const tableComponent = createTableComponent();
       const text = 'something';
       const noOfSpaces = text.length;
 
