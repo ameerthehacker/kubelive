@@ -31,7 +31,7 @@ class TableComponent extends React.Component {
 
   componentDidMount() {
     process.stdin.on('keypress', (chunk, key) => {
-      if (this.props.data.length > 0) {
+      if (this.props.data && this.props.data.length > 0) {
         if (key.name == 'down') {
           this.setState({
             selectedIndex:
@@ -134,27 +134,27 @@ class TableComponent extends React.Component {
     }
   }
 
-  render() {
-    const data = this.props.data;
-    let cellSpacing = this.props.cellSpacing;
+  getTableHeaderTexts(data) {
+    return Object.keys(data[0]);
+  }
 
-    if (!data || data.length == 0) {
-      return '';
-    }
-    const tableHeaderTexts = Object.keys(data[0]);
+  getMaxLengthOfTextInHeaders(data) {
+    const tableHeaderTexts = this.getTableHeaderTexts(data);
     const maxLengthOfTextInHeader = {};
-
-    // Default cell spacing of 5
-    if (!cellSpacing) {
-      cellSpacing = 5;
-    }
 
     tableHeaderTexts.forEach((header) => {
       maxLengthOfTextInHeader[header] = this.findMaxLengthText(data, header);
     });
 
+    return maxLengthOfTextInHeader;
+  }
+
+  padAroundTableValues(data, maxLengthOfTextInHeader) {
+    const dataCopy = data;
+    const tableHeaderTexts = this.getTableHeaderTexts(data);
+
     // Pad texts with spaces if needed
-    data.forEach((row) => {
+    dataCopy.forEach((row) => {
       tableHeaderTexts.forEach((header) => {
         // Pad text specifies extra space that is to the cell
         if (row[header].padText) {
@@ -167,7 +167,14 @@ class TableComponent extends React.Component {
       });
     });
 
-    const tableContent = data.map((row, rowIndex) => {
+    return dataCopy;
+  }
+
+  getTableContent(data, maxLengthOfTextInHeader, cellSpacing) {
+    const paddedData = this.padAroundTableValues(data, maxLengthOfTextInHeader);
+    const tableHeaderTexts = this.getTableHeaderTexts(data);
+
+    return paddedData.map((row, rowIndex) => {
       const tableContent = [];
 
       tableHeaderTexts.forEach((header, columnIndex) => {
@@ -200,8 +207,11 @@ class TableComponent extends React.Component {
 
       return <Box key={rowIndex}>{tableContent}</Box>;
     });
+  }
 
+  getTableHeader(data, maxLengthOfTextInHeader, cellSpacing) {
     const tableHeader = [];
+    const tableHeaderTexts = this.getTableHeaderTexts(data);
 
     tableHeaderTexts.forEach((header, index) => {
       tableHeader.push(
@@ -210,6 +220,29 @@ class TableComponent extends React.Component {
         </Box>
       );
     });
+
+    return tableHeader;
+  }
+
+  render() {
+    const data = this.props.data;
+    const cellSpacing = this.props.cellSpacing || 5;
+
+    if (!data || data.length == 0) {
+      return '';
+    }
+
+    const maxLengthOfTextInHeader = this.getMaxLengthOfTextInHeaders(data);
+    const tableHeader = this.getTableHeader(
+      data,
+      maxLengthOfTextInHeader,
+      cellSpacing
+    );
+    const tableContent = this.getTableContent(
+      data,
+      maxLengthOfTextInHeader,
+      cellSpacing
+    );
 
     return (
       <React.Fragment>
