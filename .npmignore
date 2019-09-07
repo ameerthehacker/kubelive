@@ -2,3 +2,14 @@ __test__/
 node_modules/
 .circleci/
 coverage/
+release.config.js
+.babelrc
+.codeclimate.yml
+.eslintignore
+.eslintrc.json
+.gitignore
+.huskyrc
+.prettierignore
+.prettierrc
+.lintstagedrc
+jest.config.json
