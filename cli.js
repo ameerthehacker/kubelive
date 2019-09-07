@@ -6,13 +6,13 @@ const { render } = require('ink');
 const cli = require('commander');
 const version = require('./package.json').version;
 const defaultResource = 'pods';
+let commandMatched = false;
 
 // hack to render default resource if nothing was given
 if (process.argv.length == 1) {
+  commandMatched = true;
   render(<App resource={defaultResource} />);
 }
-
-let commandMatched = false;
 
 cli.version(version, '-v, --version');
 
