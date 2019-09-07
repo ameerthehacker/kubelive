@@ -28,7 +28,41 @@
   <img alt="Demo" src="https://github.com/ameerthehacker/project-assets/blob/master/kubelive/screenshots/kubelive-demo-static-hq.png?raw=true" />
 </p>
 
-:rotating_light: This repo is in active development
+## Motivation
+
+I felt that the output from **kubectl get pod -w** is very cluttered and it is a pain in my ass to understand which pod is running which pod is exactly terminating so I build **kubelive** which updates the status of the pods in realtime without cluttering the terminal
+
+## Installation
+
+Make sure you have node installed and then run the command
+
+```sh
+npm install -g kubelive
+```
+
+## Available commands
+
+Show list of pods in the clutser
+
+```sh
+kubelive get pods
+```
+
+As a shortcut you can also use
+
+```sh
+kubelive
+```
+
+## Actions
+
+- You can use the :arrow_left: and :arrow_right: keys to switch between available namespaces
+
+- You can use the :arrow_up: and :arrow_down: keys to select a pod
+
+- You can press the **D** key to delete the selected pod
+
+- You can press the **C** key to copy the name of the selected pod
 
 Show your support by :star: the repo
 
