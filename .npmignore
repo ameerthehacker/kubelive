@@ -1,0 +1,4 @@
+__test__/
+node_modules/
+.circleci/
+coverage/
