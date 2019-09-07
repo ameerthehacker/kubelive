@@ -1,4 +1,4 @@
-<h1 align="center">:tada: Kubelive</h1>
+<h1 align="center">Kubelive</h1>
 
 <p align="center">
   <a href="https://circleci.com/gh/ameerthehacker/kubelive/tree/master">
