@@ -55,5 +55,9 @@ jobs:
       - checkout
 
       - run:
+          name: Install dependencies
+          command: yarn install
+
+      - run:
           name: Publish Package
-          command: npm run semantic-release
+          command: yarn semantic-release
