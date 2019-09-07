@@ -15,7 +15,7 @@ jest.mock('../../actions/pod', () => mockActions);
 const { actions } = require('../../actions/pod');
 const importJsx = require('import-jsx');
 const PodsComponent = importJsx('../../components/pods');
-const TableComponent = importJsx('../../components/table');
+const { TableComponent } = importJsx('../../components/table');
 
 describe('PodsComponent', () => {
   let component;

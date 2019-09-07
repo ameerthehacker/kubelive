@@ -2,7 +2,7 @@
 const React = require('react');
 const PropTypes = require('prop-types');
 const importJsx = require('import-jsx');
-const TableComponent = importJsx('./table');
+const { TableComponent } = importJsx('./table');
 const { actions, executeAction } = require('../actions/pod');
 
 const PodsComponent = ({ pods, namespace }) => {

@@ -1,8 +1,10 @@
 const React = require('react');
 const importJsx = require('import-jsx');
-const TableComponent = importJsx('../../components/table');
+const { TableComponent, SelectionHighlighterComponent } = importJsx(
+  '../../components/table'
+);
 const ActionBarComponent = importJsx('../../components/action-bar');
-const { Color } = require('ink');
+const { Color, Box } = require('ink');
 const { shallow } = require('enzyme');
 
 describe('Table', () => {
@@ -478,6 +480,144 @@ describe('Table', () => {
       expect(colorComponent.childAt(0).text()).toEqual('NAME');
     });
   });
+
+  describe('getTableContent()', () => {
+    it('should render the data in with proper width', () => {
+      const data = [
+        {
+          name: { text: 'Ameer' },
+          age: { text: 22 }
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data
+      });
+      const cellSpacing = 5;
+      const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
+        data
+      );
+
+      const tableContent = tableComponent.getTableContent(
+        data,
+        maxLengthOfTextInHeader,
+        cellSpacing
+      );
+
+      const tableRow = shallow(tableContent[0]);
+      const nameRow = tableRow.find(Box).first();
+      const ageRow = tableRow.find(Box).last();
+      expect(nameRow.props().width).toEqual(
+        maxLengthOfTextInHeader['name'] + cellSpacing
+      );
+      expect(ageRow.props().width).toEqual(
+        maxLengthOfTextInHeader['age'] + cellSpacing
+      );
+    });
+
+    it('should highlight the selected text', () => {
+      const selectedText = 'Shanmugam';
+      const data = [
+        {
+          name: { text: 'Ameer', isSelector: true },
+          age: { text: 22 }
+        },
+        {
+          name: { text: selectedText, isSelector: true },
+          age: { text: 22 }
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data
+      });
+      const cellSpacing = 5;
+      const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
+        data
+      );
+      tableComponent.state.selectedIndex = 1;
+
+      const tableContent = tableComponent.getTableContent(
+        data,
+        maxLengthOfTextInHeader,
+        cellSpacing
+      );
+
+      const tableRow = shallow(tableContent[1]);
+      const nameRow = tableRow.find(Box).first();
+      const highlighterComponent = nameRow.find(SelectionHighlighterComponent);
+      expect(highlighterComponent.props().isSelected).toBeTruthy();
+    });
+
+    it('should set highlight text to the selected text', () => {
+      const selectedText = 'Shanmugam';
+      const data = [
+        {
+          name: { text: 'Ameer', isSelector: true },
+          age: { text: 22 }
+        },
+        {
+          name: { text: selectedText, isSelector: true },
+          age: { text: 22 }
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data
+      });
+      const cellSpacing = 5;
+      const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
+        data
+      );
+      tableComponent.state.selectedIndex = 1;
+
+      const tableContent = tableComponent.getTableContent(
+        data,
+        maxLengthOfTextInHeader,
+        cellSpacing
+      );
+
+      const tableRow = shallow(tableContent[1]);
+      const nameRow = tableRow.find(Box).first();
+      const highlighterComponent = nameRow.find(SelectionHighlighterComponent);
+      expect(highlighterComponent.props().content).toEqual(selectedText);
+    });
+
+    it('should set this.selectedText to the selected text', () => {
+      const selectedText = 'Shanmugam';
+      const data = [
+        {
+          name: { text: 'Ameer', isSelector: true },
+          age: { text: 22 }
+        },
+        {
+          name: { text: selectedText, isSelector: true },
+          age: { text: 22 }
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data
+      });
+      const cellSpacing = 5;
+      const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
+        data
+      );
+      tableComponent.state.selectedIndex = 1;
+
+      tableComponent.getTableContent(
+        data,
+        maxLengthOfTextInHeader,
+        cellSpacing
+      );
+
+      expect(tableComponent.selectedText).toEqual(selectedText);
+    });
+  });
+
+  describe('emptySpaces()', () => {
+    it('should return specified number of empty spaces', () => {
+      const tableComponent = createTableComponent();
+
+      expect(tableComponent.emptySpaces(2)).toEqual('  ');
+    });
+  });
 });
 
 describe('Table', () => {
@@ -490,6 +630,28 @@ describe('Table', () => {
   };
 
   describe('render()', () => {
+    it('should match the snapshot', () => {
+      const data = [
+        {
+          name: { text: 'Ameer', isSelector: true },
+          age: { text: 22 }
+        },
+        {
+          name: { text: 'Shanmugam', isSelector: true },
+          age: { text: 22 }
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data,
+        namespace: 'some-namedspace',
+        actions: [],
+        cellSpacing: 5,
+        onActionPerformed: () => {}
+      });
+
+      expect(tableComponent).toMatchSnapshot();
+    });
+
     it('should render nothing when the data prop is undefined', () => {
       const tableComponent = createTableComponent();
 
@@ -551,5 +713,61 @@ describe('Table', () => {
         namespace: tableComponent.instance().props.namespace
       });
     });
+  });
+});
+
+describe('SelectionHighlighterComponent', () => {
+  it('should match the snapshot', () => {
+    const highlighterComponent = shallow(
+      <SelectionHighlighterComponent isSelected={true} content="something" />
+    );
+
+    expect(highlighterComponent).toMatchSnapshot();
+  });
+
+  it('should return blue background colored component when highlighted', () => {
+    const highlighterComponent = shallow(
+      <SelectionHighlighterComponent isSelected={true} content="something" />
+    );
+    const colorComponent = highlighterComponent
+      .find(Color)
+      .find(Color)
+      .first();
+
+    expect(colorComponent.props().bgBlue).toBeTruthy();
+  });
+
+  it('should return white colored component when highlighted', () => {
+    const highlighterComponent = shallow(
+      <SelectionHighlighterComponent isSelected={true} content="something" />
+    );
+    const colorComponent = highlighterComponent
+      .find(Color)
+      .find(Color)
+      .first();
+
+    expect(colorComponent.props().white).toBeTruthy();
+  });
+
+  it('should return colored component with selected text when highlighted', () => {
+    const content = 'something';
+    const highlighterComponent = shallow(
+      <SelectionHighlighterComponent isSelected={true} content={content} />
+    );
+    const colorComponent = highlighterComponent
+      .find(Color)
+      .find(Color)
+      .first();
+
+    expect(colorComponent.childAt(0).text()).toEqual(content);
+  });
+
+  it('should just return text when not highlighted', () => {
+    const content = 'something';
+    const highlighterComponent = shallow(
+      <SelectionHighlighterComponent isSelected={false} content={content} />
+    );
+
+    expect(highlighterComponent.childAt(0).text()).toEqual(content);
   });
 });

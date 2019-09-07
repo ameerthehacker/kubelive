@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SelectionHighlighterComponent should match the snapshot 1`] = `
+<Color
+  bgBlue={true}
+  white={true}
+>
+  something
+</Color>
+`;
+
+exports[`Table render() should match the snapshot 1`] = `
+<Fragment>
+  <ActionBarComponent
+    actions={Array []}
+    onActionPerformed={[Function]}
+  />
+  <Box
+    flexDirection="row"
+    flexGrow={0}
+    flexShrink={1}
+  >
+    <Box
+      flexDirection="row"
+      flexGrow={0}
+      flexShrink={1}
+      key="0"
+      width={14}
+    >
+      <Color
+        green={true}
+      >
+        NAME
+      </Color>
+    </Box>
+    <Box
+      flexDirection="row"
+      flexGrow={0}
+      flexShrink={1}
+      key="1"
+      width={8}
+    >
+      <Color
+        green={true}
+      >
+        AGE
+      </Color>
+    </Box>
+  </Box>
+  <Box
+    flexDirection="column"
+    flexGrow={0}
+    flexShrink={1}
+  >
+    <Box
+      flexDirection="row"
+      flexGrow={0}
+      flexShrink={1}
+      key="0"
+    >
+      <Box
+        flexDirection="row"
+        flexGrow={0}
+        flexShrink={1}
+        key="0"
+        width={14}
+      >
+        <SelectionHighlighterComponent
+          content="Ameer"
+          isSelected={false}
+        />
+      </Box>
+      <Box
+        flexDirection="row"
+        flexGrow={0}
+        flexShrink={1}
+        key="1"
+        width={8}
+      >
+        <SelectionHighlighterComponent
+          content={22}
+          isSelected={false}
+        />
+      </Box>
+    </Box>
+    <Box
+      flexDirection="row"
+      flexGrow={0}
+      flexShrink={1}
+      key="1"
+    >
+      <Box
+        flexDirection="row"
+        flexGrow={0}
+        flexShrink={1}
+        key="0"
+        width={14}
+      >
+        <SelectionHighlighterComponent
+          content="Shanmugam"
+          isSelected={true}
+        />
+      </Box>
+      <Box
+        flexDirection="row"
+        flexGrow={0}
+        flexShrink={1}
+        key="1"
+        width={8}
+      >
+        <SelectionHighlighterComponent
+          content={22}
+          isSelected={false}
+        />
+      </Box>
+    </Box>
+  </Box>
+</Fragment>
+`;

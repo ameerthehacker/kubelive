@@ -273,4 +273,7 @@ TableComponent.propTypes = {
   namespace: PropTypes.string.isRequired
 };
 
-module.exports = TableComponent;
+module.exports = {
+  TableComponent,
+  SelectionHighlighterComponent
+};
