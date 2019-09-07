@@ -1,6 +1,6 @@
 {
   "name": "kubelive",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "description": "Kubernetes command line tool to provide live data about the cluster and it's resources",
   "main": "./bin/kubelive.js",
   "bin": {
@@ -13,13 +13,15 @@
     "lint": "eslint . --ext .js --fix",
     "lint:staged": "eslint --fix",
     "coverage": "jest --coverage --config jest.config.json",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "semantic-release": "semantic-release"
   },
   "repository": "https://github.com/ameerthehacker/kubelive.git",
   "author": "ameerthehacker",
   "license": "MIT",
   "dependencies": {
     "@kubernetes/client-node": "^0.10.2",
+    "@semantic-release/npm": "^5.1.15",
     "clipboardy": "^2.1.0",
     "commander": "^3.0.0",
     "import-jsx": "^3.0.0",
@@ -34,6 +36,7 @@
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
+    "@semantic-release/commit-analyzer": "^6.3.0",
     "babel-jest": "^24.9.0",
     "codecov": "^3.5.0",
     "enzyme": "^3.10.0",
@@ -45,6 +48,7 @@
     "jest": "^24.9.0",
     "lint-staged": "^9.2.3",
     "prettier": "^1.18.2",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "semantic-release": "^15.13.24"
   }
 }
