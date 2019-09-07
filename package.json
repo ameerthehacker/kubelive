@@ -6,6 +6,12 @@
   "bin": {
     "kubelive": "./bin/kubelive.js"
   },
+  "keywords": [
+    "kubernetes",
+    "kube",
+    "kubectl",
+    "pods"
+  ],
   "scripts": {
     "start": "node ./bin/kubelive.js",
     "test": "jest --config jest.config.json",
