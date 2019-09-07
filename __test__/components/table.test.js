@@ -1,10 +1,14 @@
 const React = require('react');
 const importJsx = require('import-jsx');
 const TableComponent = importJsx('../../components/table');
+const ActionBarComponent = importJsx('../../components/action-bar');
 const { Color } = require('ink');
+const { shallow } = require('enzyme');
 
 describe('Table', () => {
-  const createTableComponent = (props = { data: [] }) => {
+  const createTableComponent = (
+    props = { data: [], namespace: 'some-namespace' }
+  ) => {
     const tableComponent = new TableComponent(props);
     tableComponent.setState = jest.fn();
 
@@ -25,6 +29,32 @@ describe('Table', () => {
 
     it('should respond to down key only when there is data', () => {
       const tableComponent = createTableComponent();
+      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
+        fn(undefined, { name: 'down' });
+      });
+
+      tableComponent.componentDidMount();
+
+      expect(tableComponent.setState).not.toHaveBeenCalled();
+    });
+
+    it('should not respond to up key only when the data is undefined', () => {
+      const tableComponent = createTableComponent({
+        data: undefined
+      });
+      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
+        fn(undefined, { name: 'up' });
+      });
+
+      tableComponent.componentDidMount();
+
+      expect(tableComponent.setState).not.toHaveBeenCalled();
+    });
+
+    it('should not respond to down key only when the data is undefined', () => {
+      const tableComponent = createTableComponent({
+        data: undefined
+      });
       process.stdin.on = jest.fn().mockImplementation((event, fn) => {
         fn(undefined, { name: 'down' });
       });
@@ -308,6 +338,80 @@ describe('Table', () => {
       );
 
       expect(result).toEqual(' ' + text + ' ');
+    });
+  });
+});
+
+describe('Table', () => {
+  const createTableComponent = (
+    props = { data: [], namespace: 'some-namespace' }
+  ) => {
+    const tableComponent = shallow(<TableComponent {...props} />);
+
+    return tableComponent;
+  };
+
+  describe('render()', () => {
+    it('should render nothing when the data prop is undefined', () => {
+      const tableComponent = createTableComponent();
+
+      expect(tableComponent.text()).toBeFalsy();
+    });
+
+    it('should render action bar with actions prop as this.props.actions', () => {
+      const actions = [
+        {
+          key: 'd',
+          description: 'DELETE'
+        }
+      ];
+      const tableComponent = createTableComponent({
+        data: [
+          {
+            name: { text: 'Ameer' }
+          }
+        ],
+        actions,
+        namespace: 'some-namespace'
+      });
+
+      const actionBarComponent = tableComponent
+        .find(ActionBarComponent)
+        .first();
+
+      expect(actionBarComponent.props().actions).toEqual(actions);
+    });
+
+    it('this.props.onActionPerformed should be called with {key, name, namespace} when onActionPerformed is called in action bar', () => {
+      const tableComponent = createTableComponent({
+        data: [
+          {
+            name: { text: 'Ameer', isSelector: true }
+          }
+        ],
+        actions: [
+          {
+            key: 'd',
+            description: 'delete'
+          }
+        ],
+        namespace: 'some-namespace',
+        onActionPerformed: jest.fn()
+      });
+      const actionBarComponent = tableComponent
+        .find(ActionBarComponent)
+        .first();
+      const key = { name: 'd' };
+
+      actionBarComponent.props().onActionPerformed(key);
+
+      expect(
+        tableComponent.instance().props.onActionPerformed
+      ).toHaveBeenCalledWith({
+        key,
+        name: tableComponent.instance().selectedText,
+        namespace: tableComponent.instance().props.namespace
+      });
     });
   });
 });
