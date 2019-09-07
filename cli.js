@@ -9,7 +9,7 @@ const defaultResource = 'pods';
 let commandMatched = false;
 
 // hack to render default resource if nothing was given
-if (process.argv.length == 1) {
+if (process.argv.length == 2) {
   commandMatched = true;
   render(<App resource={defaultResource} />);
 }
