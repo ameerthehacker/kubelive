@@ -340,6 +340,144 @@ describe('Table', () => {
       expect(result).toEqual(' ' + text + ' ');
     });
   });
+
+  describe('padAroundTableValues', () => {
+    it('should pad extra space to match max length text', () => {
+      const tableComponent = createTableComponent();
+      const data = [
+        {
+          name: { text: 'Zauba', padText: true, extraPadding: 1 }
+        },
+        {
+          name: { text: 'Sam', padText: true, extraPadding: 1 }
+        }
+      ];
+      const result = tableComponent.padAroundTableValues(data, {
+        name: 5
+      });
+      const expectedResult = [
+        {
+          name: { text: ' Zauba ', padText: true, extraPadding: 1 }
+        },
+        {
+          name: { text: '  Sam  ', padText: true, extraPadding: 1 }
+        }
+      ];
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('getTableHeaderTexts()', () => {
+    it('should return the table headers', () => {
+      const tableComponent = createTableComponent();
+      const result = tableComponent.getTableHeaderTexts([
+        {
+          name: 'Ameer',
+          age: 18
+        }
+      ]);
+
+      expect(result).toEqual(['name', 'age']);
+    });
+  });
+
+  describe('getMaxLengthOfTextInHeaders()', () => {
+    it('should return the table headers', () => {
+      const tableComponent = createTableComponent();
+      const longName = 'Shanmugam';
+      const longAge = '100';
+      const result = tableComponent.getMaxLengthOfTextInHeaders([
+        {
+          name: { text: 'Ameer' },
+          age: { text: 18 }
+        },
+        {
+          name: { text: longName },
+          age: { text: longAge }
+        }
+      ]);
+
+      expect(result).toEqual({
+        name: longName.length,
+        age: longAge.length
+      });
+    });
+  });
+
+  describe('getTableHeader()', () => {
+    it('should return the table headers with correct width', () => {
+      const tableComponent = createTableComponent();
+      const longName = 'Shanmugam';
+      const longAge = '100';
+      const cellSpacing = 5;
+      const tableHeader = tableComponent.getTableHeader(
+        [
+          {
+            name: { text: 'Ameer' },
+            age: { text: 18 }
+          },
+          {
+            name: { text: longName },
+            age: { text: longAge }
+          }
+        ],
+        {
+          name: longName.length,
+          age: longAge.length
+        },
+        cellSpacing
+      );
+
+      const nameHeader = shallow(tableHeader[0]);
+      const ageHeader = shallow(tableHeader[1]);
+
+      expect(nameHeader.instance().props.width).toEqual(
+        longName.length + cellSpacing
+      );
+      expect(ageHeader.instance().props.width).toEqual(
+        longAge.length + cellSpacing
+      );
+    });
+
+    it('should render the text in green color', () => {
+      const tableComponent = createTableComponent();
+      const longName = 'Shanmugam';
+      const cellSpacing = 5;
+      const tableHeader = tableComponent.getTableHeader(
+        [
+          {
+            name: { text: longName }
+          }
+        ],
+        cellSpacing
+      );
+
+      const nameHeader = shallow(tableHeader[0]);
+      const colorComponent = nameHeader.find(Color).first();
+
+      expect(colorComponent.props().green).toBeTruthy();
+    });
+
+    it('should render the text inside the color component', () => {
+      const tableComponent = createTableComponent();
+      const longName = 'Shanmugam';
+      const cellSpacing = 5;
+      const tableHeader = tableComponent.getTableHeader(
+        [
+          {
+            name: { text: longName }
+          }
+        ],
+        cellSpacing
+      );
+
+      const nameHeader = shallow(tableHeader[0]);
+      const colorComponent = nameHeader.find(Color).first();
+
+      expect(colorComponent.childAt(0).text()).toEqual('NAME');
+    });
+  });
 });
 
 describe('Table', () => {
