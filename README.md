@@ -13,11 +13,8 @@
   <a href="https://jestjs.io/">
     <img alt="jest" src="https://img.shields.io/badge/tested%20with-jest-blue?style=flat-square" />
   </a>
-  <a href="https://codeclimate.com/github/ameerthehacker/kubelive/maintainability">
-    <img alt="code-climate-maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/ameerthehacker/kubelive?style=flat-square" />
-  </a>
-  <a href="https://codeclimate.com/github/ameerthehacker/kubelive/maintainability">
-    <img alt="code-climate-issues" src="https://img.shields.io/codeclimate/issues/ameerthehacker/kubelive?style=flat-square" />
+  <a href="https://github.com/semantic-release/semantic-release">
+    <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square" />
   </a>
 </p>
 
