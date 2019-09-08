@@ -13,3 +13,4 @@ release.config.js
 .prettierrc
 .lintstagedrc
 jest.config.json
+.github
