@@ -35,13 +35,15 @@
     "ink-table": "^2.0.1",
     "javascript-time-ago": "^2.0.1",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0"
+    "react": "^16.9.0",
+    "update-notifier": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@semantic-release/commit-analyzer": "^6.3.0",
+    "@semantic-release/npm": "^5.1.15",
     "babel-jest": "^24.9.0",
     "codecov": "^3.5.0",
     "enzyme": "^3.10.0",
@@ -54,7 +56,6 @@
     "lint-staged": "^9.2.3",
     "prettier": "^1.18.2",
     "react-dom": "^16.9.0",
-    "semantic-release": "^15.13.24",
-    "@semantic-release/npm": "^5.1.15"
+    "semantic-release": "^15.13.24"
   }
 }
