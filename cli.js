@@ -4,9 +4,15 @@ const importJsx = require('import-jsx');
 const App = importJsx('./containers/app');
 const { render } = require('ink');
 const cli = require('commander');
-const version = require('./package.json').version;
+const pkg = require('./package.json');
 const defaultResource = 'pods';
 let commandMatched = false;
+const updateNotifier = require('update-notifier');
+
+// Checking for available updates
+const notifier = updateNotifier({ pkg });
+// Show update notification
+notifier.notify();
 
 // hack to render default resource if nothing was given
 if (process.argv.length == 2) {
@@ -14,7 +20,7 @@ if (process.argv.length == 2) {
   render(<App resource={defaultResource} />);
 }
 
-cli.version(version, '-v, --version');
+cli.version(pkg.version, '-v, --version');
 
 cli
   .command('get <resource>')
