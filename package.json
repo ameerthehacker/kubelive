@@ -32,7 +32,6 @@
     "import-jsx": "^3.0.0",
     "ink": "^2.3.0",
     "ink-tab": "^2.1.3",
-    "ink-table": "^2.0.1",
     "javascript-time-ago": "^2.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
