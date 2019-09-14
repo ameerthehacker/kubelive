@@ -10,6 +10,11 @@ class BaseContainer extends Component {
     this.state = { items: [], err: '' };
     this.timer;
     this.willComponentUnmount = false;
+
+    // For resources which are not bound by namespaces eg: nodes
+    if (!this.props.isNamespaced) {
+      this.listenForChanges();
+    }
   }
 
   setStateSafely(state) {
@@ -19,7 +24,11 @@ class BaseContainer extends Component {
   }
 
   getSnapshotBeforeUpdate(prevProps) {
-    if (this.props.namespace != prevProps.namespace && !this.state.err) {
+    if (
+      this.props.isNamespaced &&
+      this.props.namespace != prevProps.namespace &&
+      !this.state.err
+    ) {
       this.listenForChanges(this.props.namespace);
     }
 
@@ -59,6 +68,8 @@ class BaseContainer extends Component {
         <this.props.componentRef
           items={this.state.items}
           namespace={this.props.namespace}
+          stdin={this.props.stdin}
+          setRawMode={this.props.setRawMode}
         />
       );
     } else {
@@ -72,12 +83,15 @@ class BaseContainer extends Component {
 }
 
 BaseContainer.propTypes = {
-  namespace: PropTypes.string.isRequired,
+  namespace: PropTypes.string,
   transformer: PropTypes.func,
   componentRef: PropTypes.func.isRequired,
   api: PropTypes.object.isRequired,
   refreshFn: PropTypes.string.isRequired,
-  refreshInterval: PropTypes.number
+  refreshInterval: PropTypes.number,
+  isNamespaced: PropTypes.bool,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = BaseContainer;

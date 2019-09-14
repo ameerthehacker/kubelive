@@ -25,13 +25,18 @@ class ReplicationControllers extends Component {
         api={k8sApi}
         refreshFn="listNamespacedReplicationController"
         componentRef={ReplicationControllersComponent}
+        isNamespaced={true}
+        stdin={this.props.stdin}
+        setRawMode={this.props.setRawMode}
       />
     );
   }
 }
 
 ReplicationControllers.propTypes = {
-  namespace: PropTypes.string.isRequired
+  namespace: PropTypes.string.isRequired,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = ReplicationControllers;

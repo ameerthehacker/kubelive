@@ -9,6 +9,7 @@ class ActionBarComponent extends Component {
     super(props);
     this.keyPressListeners = [];
     this.state = { waitingForConfirmation: false };
+    this.props.setRawMode(true);
   }
 
   getAvailableActions() {
@@ -54,16 +55,15 @@ class ActionBarComponent extends Component {
   componentDidMount() {
     this.props.actions.forEach((action) => {
       const keyPressListener = this.createKeyPressListener(action);
-
       this.keyPressListeners.push(keyPressListener);
-      process.stdin.on('keypress', keyPressListener);
+      this.props.stdin.on('keypress', keyPressListener);
     });
   }
 
   componentWillUnmount() {
     // Remove all listeners added by this component
     this.keyPressListeners.forEach((keyPressListener) => {
-      process.stdin.removeListener('keypress', keyPressListener);
+      this.props.stdin.removeListener('keypress', keyPressListener);
     });
   }
 
@@ -86,7 +86,9 @@ class ActionBarComponent extends Component {
 
 ActionBarComponent.propTypes = {
   actions: PropTypes.array.isRequired,
-  onActionPerformed: PropTypes.func.isRequired
+  onActionPerformed: PropTypes.func.isRequired,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = ActionBarComponent;

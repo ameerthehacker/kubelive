@@ -8,11 +8,18 @@ const {
   executeAction
 } = require('../actions/replication-controllers');
 
-const ReplicationControllerControllers = ({ items, namespace }) => {
+const ReplicationControllerControllers = ({
+  items,
+  namespace,
+  stdin,
+  setRawMode
+}) => {
   return (
     <TableComponent
       data={items}
       namespace={namespace}
+      stdin={stdin}
+      setRawMode={setRawMode}
       actions={actions}
       onActionPerformed={({ key, name, namespace }) =>
         executeAction(key, name, namespace)
@@ -23,7 +30,9 @@ const ReplicationControllerControllers = ({ items, namespace }) => {
 
 ReplicationControllerControllers.propTypes = {
   items: PropTypes.array.isRequired,
-  namespace: PropTypes.string.isRequired
+  namespace: PropTypes.string.isRequired,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = ReplicationControllerControllers;

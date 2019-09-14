@@ -6,7 +6,7 @@ const ServicesComponent = importJsx('../components/services');
 const BaseContainer = importJsx('./base');
 const { Component } = require('react');
 const PropTypes = require('prop-types');
-const { transformServiceData } = require('../transformers/services');
+const { transformServiceData } = require('../transformers/service');
 
 class Pods extends Component {
   constructor(props) {
@@ -21,13 +21,18 @@ class Pods extends Component {
         api={k8sApi}
         refreshFn="listNamespacedService"
         componentRef={ServicesComponent}
+        isNamespaced={true}
+        stdin={this.props.stdin}
+        setRawMode={this.props.setRawMode}
       />
     );
   }
 }
 
 Pods.propTypes = {
-  namespace: PropTypes.string.isRequired
+  namespace: PropTypes.string.isRequired,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = Pods;

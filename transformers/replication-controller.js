@@ -7,7 +7,7 @@ const timeAgo = new TimeAgo('en-US');
 
 /**
  * It transforms the items object from kube api into a custom format
- * @param {Array<V1ReplicationController} items list of V1ReplicationController object from the kube replication ontroller api
+ * @param {Array<V1ReplicationController} items list of V1ReplicationController object from the kube replication controller api
  * @returns List of custom formatted replication controller data
  */
 const transformReplicationControllerData = (items) => {

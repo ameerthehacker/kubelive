@@ -1,11 +1,9 @@
 'use strict';
-const k8sApi = require('../../kube/api');
 const React = require('react');
 const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
 const Base = importJsx('../../containers/base');
 const { Color } = require('ink');
-const { transformPodData } = require('../../transformers/pod');
 jest.mock('../../transformers/pod', () => ({
   transformPodData: jest.fn()
 }));
@@ -173,7 +171,9 @@ describe('Base', () => {
       base.listenForChanges(namespace);
 
       base.props.api.refreshFn().then(() => {
-        expect(base.props.transformer).toHaveBeenCalledWith(podsResponse.body.items);
+        expect(base.props.transformer).toHaveBeenCalledWith(
+          podsResponse.body.items
+        );
       });
     });
 
@@ -181,7 +181,9 @@ describe('Base', () => {
       expect.assertions(1);
       const setStateSafelyMock = (base.setStateSafely = jest.fn());
       const transformPodDataResult = [{ name: 'pod1' }, { name: 'pod2' }];
-      base.props.transformer = jest.fn().mockReturnValue(transformPodDataResult);
+      base.props.transformer = jest
+        .fn()
+        .mockReturnValue(transformPodDataResult);
 
       base.listenForChanges(namespace);
 
@@ -194,12 +196,15 @@ describe('Base', () => {
 
     it('should call setStateSafely({ err }) when there is error', () => {
       expect.assertions(1);
-      const setStateSafelyMock = base.setStateSafely = jest.fn();
-      base.props.api.refreshFn = jest.fn().mockRejectedValue({ code: 'ENOTFOUND' })
+      const setStateSafelyMock = (base.setStateSafely = jest.fn());
+      base.props.api.refreshFn = jest
+        .fn()
+        .mockRejectedValue({ code: 'ENOTFOUND' });
 
       base.listenForChanges(namespace);
 
-      base.props.api.refreshFn()
+      base.props.api
+        .refreshFn()
         .then()
         .catch((err) => {
           expect(setStateSafelyMock).toHaveBeenCalledWith({
@@ -215,9 +220,16 @@ describe('Base', () => {
   const namespace = 'some-namespace';
   const refreshFn = Promise.resolve({});
   const componentRef = () => 'something';
-  const createBase = (props = { namespace, api: { refreshFn }, refreshFn: 'refreshFn', componentRef }) => {
+  const createBase = (
+    props = {
+      namespace,
+      api: { refreshFn },
+      refreshFn: 'refreshFn',
+      componentRef
+    }
+  ) => {
     return shallow(<Base {...props} />);
-  }
+  };
 
   describe('render()', () => {
     it('should render the PodsComponent with namspace prop as this.props.namespace when there is no error', () => {
