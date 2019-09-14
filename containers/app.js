@@ -5,6 +5,7 @@ const importJsx = require('import-jsx');
 const Namespaces = importJsx('./namespaces');
 const Pods = importJsx('./pods');
 const Services = importJsx('./services');
+const ReplicationController = importJsx('./replication-controllers');
 const PropTypes = require('prop-types');
 const { Color } = require('ink');
 
@@ -27,6 +28,11 @@ class App extends Component {
       case 'service':
       case 'services':
         return <Services namespace={this.state.selectedNamespace} />;
+      case 'replicationcontroller':
+      case 'replicationcontrollers':
+        return (
+          <ReplicationController namespace={this.state.selectedNamespace} />
+        );
       default:
         return false;
     }
