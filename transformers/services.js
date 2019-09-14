@@ -42,7 +42,7 @@ const transformServiceData = (items) => {
       name: { text: item.metadata.name, isSelector: true },
       type: { text: item.spec.type },
       'cluster-ip': { text: item.spec.clusterIP },
-      ports: { text: ports.join(',') },
+      'port(s)': { text: ports.join(',') },
       'external-ip': { text: externalIp },
       age: {
         text: timeAgo.format(item.metadata.creationTimestamp, {

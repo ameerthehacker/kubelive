@@ -3,18 +3,17 @@ const k8sApi = require('../../kube/api');
 const React = require('react');
 const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
-const Pods = importJsx('../../containers/pods');
-const PodsComponent = importJsx('../../components/pods');
+const Base = importJsx('../../containers/base');
 const { Color } = require('ink');
 const { transformPodData } = require('../../transformers/pod');
 jest.mock('../../transformers/pod', () => ({
   transformPodData: jest.fn()
 }));
 
-describe('Pods', () => {
-  let pods;
-  let listNamespacedPodMock;
+describe('Base', () => {
+  let base;
   let setStateMock;
+  let refreshFn = 'refreshFn';
   const podsResponse = {
     body: {
       items: [{ metadata: { name: 'pod1' } }, { metadata: { name: 'pod2' } }]
@@ -22,11 +21,22 @@ describe('Pods', () => {
   };
 
   beforeEach(() => {
-    listNamespacedPodMock = k8sApi.listNamespacedPod = jest
-      .fn()
-      .mockResolvedValue(podsResponse);
-    pods = new Pods({});
-    pods.setState = setStateMock = jest.fn();
+    base = new Base({
+      componentRef: jest.fn().mockReturnValue(null),
+      api: {
+        [refreshFn]: jest.fn().mockResolvedValue(podsResponse)
+      },
+      transformer: jest.fn().mockReturnValue([
+        {
+          name: { text: 'pod1' }
+        },
+        {
+          name: { text: 'pod2' }
+        }
+      ]),
+      refreshFn
+    });
+    base.setState = setStateMock = jest.fn();
   });
 
   describe('setStateSafely', () => {
@@ -37,17 +47,17 @@ describe('Pods', () => {
     });
 
     it('should call this.setState only when the this.willComponentUnmount is false', () => {
-      pods.willComponentUnmount = false;
+      base.willComponentUnmount = false;
 
-      pods.setStateSafely(state);
+      base.setStateSafely(state);
 
       expect(setStateMock).toHaveBeenCalledWith(state);
     });
 
     it('should not call this.setState only when the this.willComponentUnmount is true', () => {
-      pods.willComponentUnmount = true;
+      base.willComponentUnmount = true;
 
-      pods.setStateSafely(state);
+      base.setStateSafely(state);
 
       expect(setStateMock).not.toHaveBeenCalledWith(state);
     });
@@ -55,63 +65,63 @@ describe('Pods', () => {
 
   describe('getSnapshotBeforeUpdate()', () => {
     it('should call listenForChanges(namespace) when there is a change in namespace', () => {
-      pods.listenForChanges = jest.fn();
-      pods.props.namespace = 'namespace2';
+      base.listenForChanges = jest.fn();
+      base.props.namespace = 'namespace2';
 
-      pods.getSnapshotBeforeUpdate({
+      base.getSnapshotBeforeUpdate({
         namespace: 'namespace1'
       });
 
-      expect(pods.listenForChanges).toHaveBeenCalledWith('namespace2');
+      expect(base.listenForChanges).toHaveBeenCalledWith('namespace2');
     });
 
     it('should not call listenForChanges(namespace) when there is no change in namespace', () => {
-      pods.listenForChanges = jest.fn();
-      pods.props.namespace = 'namespace1';
+      base.listenForChanges = jest.fn();
+      base.props.namespace = 'namespace1';
 
-      pods.getSnapshotBeforeUpdate({
+      base.getSnapshotBeforeUpdate({
         namespace: 'namespace1'
       });
 
-      expect(pods.listenForChanges).not.toHaveBeenCalled();
+      expect(base.listenForChanges).not.toHaveBeenCalled();
     });
 
     it('should not call listenForChanges(namespace) when there is a error', () => {
-      pods.listenForChanges = jest.fn();
-      pods.props.namespace = 'namespace1';
-      pods.state.err = { code: 'ENOTFOUND' };
+      base.listenForChanges = jest.fn();
+      base.props.namespace = 'namespace1';
+      base.state.err = { code: 'ENOTFOUND' };
 
-      pods.getSnapshotBeforeUpdate({
+      base.getSnapshotBeforeUpdate({
         namespace: 'namespace2'
       });
 
-      expect(pods.listenForChanges).not.toHaveBeenCalled();
+      expect(base.listenForChanges).not.toHaveBeenCalled();
     });
   });
 
   describe('componentWillUnmount()', () => {
     it('should set this.willComponentUnmount=false when the component unmounts', () => {
-      pods.willComponentUnmount = false;
+      base.willComponentUnmount = false;
 
-      pods.componentWillUnmount();
+      base.componentWillUnmount();
 
-      expect(pods.willComponentUnmount).toBeTruthy();
+      expect(base.willComponentUnmount).toBeTruthy();
     });
 
     it('should clear the timer if it exists', () => {
       global.clearInterval = jest.fn();
-      pods.timer = 1234;
+      base.timer = 1234;
 
-      pods.componentWillUnmount();
+      base.componentWillUnmount();
 
-      expect(global.clearInterval).toHaveBeenCalledWith(pods.timer);
+      expect(global.clearInterval).toHaveBeenCalledWith(base.timer);
     });
 
     it('should not clear the timer if it does not exists', () => {
       global.clearInterval = jest.fn();
-      pods.timer = undefined;
+      base.timer = undefined;
 
-      pods.componentWillUnmount();
+      base.componentWillUnmount();
 
       expect(global.clearInterval).not.toHaveBeenCalled();
     });
@@ -129,74 +139,71 @@ describe('Pods', () => {
     });
 
     it('should clear the timer if it already exists', () => {
-      const timer = (pods.timer = 1234);
+      const timer = (base.timer = 1234);
 
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
       expect(clearIntervalMock).toHaveBeenCalledWith(timer);
     });
 
     it('should set the timer to what setInterval returns', () => {
       const timer = 'some-timer-object';
-      pods.timer = false;
+      base.timer = false;
       global.setInterval = jest.fn().mockReturnValue(timer);
 
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
-      expect(pods.timer).toEqual(timer);
+      expect(base.timer).toEqual(timer);
     });
 
     it('should call setInterval()', () => {
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
       expect(global.setInterval).toHaveBeenCalled();
     });
 
-    it('should call k8Api.listNamespacedPod(namespace)', () => {
-      pods.listenForChanges(namespace);
+    it('should call base.api.refreshFn(namespace)', () => {
+      base.listenForChanges(namespace);
 
-      expect(k8sApi.listNamespacedPod).toHaveBeenCalledWith(namespace);
+      expect(base.props.api.refreshFn).toHaveBeenCalledWith(namespace);
     });
 
     it('should call transformPodData(items)', () => {
       expect.assertions(1);
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
-      listNamespacedPodMock().then(() => {
-        expect(transformPodData).toHaveBeenCalledWith(podsResponse.body.items);
+      base.props.api.refreshFn().then(() => {
+        expect(base.props.transformer).toHaveBeenCalledWith(podsResponse.body.items);
       });
     });
 
     it('should call setStateSafely(pods) when there is no error', () => {
       expect.assertions(1);
-      const setStateSafelyMock = (pods.setStateSafely = jest.fn());
+      const setStateSafelyMock = (base.setStateSafely = jest.fn());
       const transformPodDataResult = [{ name: 'pod1' }, { name: 'pod2' }];
-      transformPodData.mockReturnValue(transformPodDataResult);
+      base.props.transformer = jest.fn().mockReturnValue(transformPodDataResult);
 
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
-      listNamespacedPodMock().then(() => {
+      base.props.api.refreshFn().then(() => {
         expect(setStateSafelyMock).toHaveBeenCalledWith({
-          pods: transformPodDataResult
+          items: transformPodDataResult
         });
       });
     });
 
     it('should call setStateSafely({ err }) when there is error', () => {
       expect.assertions(1);
-      k8sApi.listNamespacedPod = jest.fn().mockRejectedValue({
-        code: 'ENOTFOUND'
-      });
-      const setStateSafelyMock = (pods.setStateSafely = jest.fn());
+      const setStateSafelyMock = base.setStateSafely = jest.fn();
+      base.props.api.refreshFn = jest.fn().mockRejectedValue({ code: 'ENOTFOUND' })
 
-      pods.listenForChanges(namespace);
+      base.listenForChanges(namespace);
 
-      k8sApi
-        .listNamespacedPod()
+      base.props.api.refreshFn()
         .then()
         .catch((err) => {
           expect(setStateSafelyMock).toHaveBeenCalledWith({
-            ...pods.state,
+            ...base.state,
             err: err.code
           });
         });
@@ -204,46 +211,47 @@ describe('Pods', () => {
   });
 });
 
-describe('Pods', () => {
+describe('Base', () => {
   const namespace = 'some-namespace';
+  const refreshFn = Promise.resolve({});
+  const componentRef = () => 'something';
+  const createBase = (props = { namespace, api: { refreshFn }, refreshFn: 'refreshFn', componentRef }) => {
+    return shallow(<Base {...props} />);
+  }
 
   describe('render()', () => {
     it('should render the PodsComponent with namspace prop as this.props.namespace when there is no error', () => {
-      k8sApi.listNamespacedPod = jest.fn();
+      const base = createBase();
 
-      const podsContainer = shallow(<Pods namespace={namespace} />);
+      const renderComponent = base.find(componentRef).first();
 
-      const podsComponent = podsContainer.find(PodsComponent).first();
-
-      expect(podsComponent.props().namespace).toEqual(namespace);
+      expect(renderComponent.props().namespace).toEqual(namespace);
     });
 
     it('should render the PodsComponent with pods prop as this.state.pods when there is no error', () => {
-      k8sApi.listNamespacedPod = jest.fn();
+      const base = createBase();
 
-      const podsContainer = shallow(<Pods namespace={namespace} />);
-      podsContainer.setState({
-        ...podsContainer.state(),
-        pods: [{ name: 'pod1' }]
+      base.setState({
+        ...base.state(),
+        items: [{ name: 'pod1' }]
       });
-      podsContainer.update();
+      base.update();
 
-      const podsComponent = podsContainer.find(PodsComponent).first();
+      const renderComponent = base.find(componentRef).first();
 
-      expect(podsComponent.props().pods).toEqual(podsContainer.state().pods);
+      expect(renderComponent.props().items).toEqual(base.state().items);
     });
 
     it('should render the color component with error when there is an error', () => {
-      k8sApi.listNamespacedPod = jest.fn();
       const errCode = 'ENOTFOUND';
-      const podsContainer = shallow(<Pods namespace={namespace} />);
+      const base = createBase();
 
-      podsContainer.setState({
+      base.setState({
         err: errCode
       });
 
-      podsContainer.update();
-      const colorComponent = podsContainer.find(Color).first();
+      base.update();
+      const colorComponent = base.find(Color).first();
       expect(colorComponent.render().text()).toContain(errCode);
     });
   });

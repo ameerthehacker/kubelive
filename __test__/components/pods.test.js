@@ -28,7 +28,7 @@ describe('PodsComponent', () => {
   let namespace = 'some-name';
 
   beforeEach(() => {
-    component = shallow(<PodsComponent pods={pods} namespace={namespace} />);
+    component = shallow(<PodsComponent items={pods} namespace={namespace} />);
     tableComponent = component.find(TableComponent).first();
     executeActionMock.mockClear();
   });
