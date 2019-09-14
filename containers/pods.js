@@ -3,74 +3,26 @@ const k8sApi = require('../kube/api');
 const React = require('react');
 const importJsx = require('import-jsx');
 const PodsComponent = importJsx('../components/pods');
+const BaseContainer = importJsx('./base');
 const { Component } = require('react');
 const PropTypes = require('prop-types');
-const { Color } = require('ink');
 const { transformPodData } = require('../transformers/pod');
 
 class Pods extends Component {
   constructor(props) {
     super(props);
-    this.state = { pods: [], err: '' };
-    this.timer;
-    this.willComponentUnmount = false;
-  }
-
-  setStateSafely(state) {
-    if (!this.willComponentUnmount) {
-      this.setState(state);
-    }
-  }
-
-  getSnapshotBeforeUpdate(prevProps) {
-    if (this.props.namespace != prevProps.namespace && !this.state.err) {
-      this.listenForChanges(this.props.namespace);
-    }
-
-    return null;
-  }
-
-  componentDidUpdate() {}
-
-  componentWillUnmount() {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-    this.willComponentUnmount = true;
-  }
-
-  listenForChanges(namespace) {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-
-    this.timer = setInterval(() => {
-      k8sApi
-        .listNamespacedPod(namespace)
-        .then((response) => {
-          this.setStateSafely({ pods: transformPodData(response.body.items) });
-        })
-        .catch((err) => {
-          this.setStateSafely({ ...this.state, err: err.code });
-        });
-    }, 1000);
   }
 
   render() {
-    if (!this.state.err) {
-      return (
-        <PodsComponent
-          pods={this.state.pods}
-          namespace={this.props.namespace}
-        />
-      );
-    } else {
-      return (
-        <Color red>
-          Unable to connect to the kube cluster: {this.state.err}
-        </Color>
-      );
-    }
+    return (
+      <BaseContainer
+        namespace={this.props.namespace}
+        transformer={transformPodData}
+        api={k8sApi}
+        refreshFn="listNamespacedPod"
+        componentRef={PodsComponent}
+      />
+    );
   }
 }
 

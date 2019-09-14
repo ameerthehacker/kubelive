@@ -5,10 +5,10 @@ const importJsx = require('import-jsx');
 const { TableComponent } = importJsx('./table');
 const { actions, executeAction } = require('../actions/pod');
 
-const PodsComponent = ({ pods, namespace }) => {
+const PodsComponent = ({ items, namespace }) => {
   return (
     <TableComponent
-      data={pods}
+      data={items}
       namespace={namespace}
       actions={actions}
       onActionPerformed={({ key, name, namespace }) =>
@@ -19,7 +19,7 @@ const PodsComponent = ({ pods, namespace }) => {
 };
 
 PodsComponent.propTypes = {
-  pods: PropTypes.array.isRequired,
+  items: PropTypes.array.isRequired,
   namespace: PropTypes.string.isRequired
 };
 
