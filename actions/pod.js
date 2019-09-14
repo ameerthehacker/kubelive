@@ -1,18 +1,8 @@
 'use strict';
 const k8sApi = require('../kube/api');
-const clipboardy = require('clipboardy');
+const { baseActions, baseExecuteAction } = require('./base');
 
-const actions = [
-  {
-    key: 'd',
-    description: 'Delete',
-    needsConfirmation: true
-  },
-  {
-    key: 'c',
-    description: 'Copy'
-  }
-];
+const actions = [...baseActions];
 
 const executeAction = (key, name, namespace) => {
   if (key.name == 'd') {
@@ -20,8 +10,8 @@ const executeAction = (key, name, namespace) => {
       .deleteNamespacedPod(name, namespace)
       //TODO: show the error somewhere
       .catch(() => {});
-  } else if (key.name == 'c') {
-    clipboardy.writeSync(name);
+  } else {
+    baseExecuteAction(key, name, namespace);
   }
 };
 
