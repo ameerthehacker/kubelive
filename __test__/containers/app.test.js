@@ -17,22 +17,16 @@ describe('App', () => {
   });
 
   describe('getResourceComponent', () => {
-    it('should return <PodComponent /> when the resource is pod', () => {
+    it('should return PodComponent when the resource is pod', () => {
       component.props.resource = 'pod';
-      const namespace = (component.state.selectedNamespace = 'some-namespace');
 
-      expect(component.getResourceComponent()).toEqual(
-        <Pods namespace={namespace} />
-      );
+      expect(component.getResourceComponent()).toEqual(Pods);
     });
 
-    it('should return <PodComponent /> when the resource is pods', () => {
+    it('should return PodComponent when the resource is pods', () => {
       component.props.resource = 'pods';
-      const namespace = (component.state.selectedNamespace = 'some-namespace');
 
-      expect(component.getResourceComponent()).toEqual(
-        <Pods namespace={namespace} />
-      );
+      expect(component.getResourceComponent()).toEqual(Pods);
     });
 
     it('should return false when the resource is not found', () => {
@@ -75,10 +69,10 @@ describe('App', () => {
         resource: 'pods'
       });
 
-      container.update();
+      container.instance().forceUpdate();
 
       const podsComponent = container.find(Pods);
-      expect(podsComponent.exists()).toBeTruthy();
+      expect(podsComponent).toBeTruthy();
     });
 
     it('should call getResourceComponent(resource) during render()', () => {
@@ -100,21 +94,6 @@ describe('App', () => {
       container.instance().onNamespaceChange(namespace);
 
       expect(container.state().selectedNamespace).toEqual(namespace);
-    });
-
-    it('should set the Pods namespace prop to this.state.selectedNamespace', () => {
-      const namespace = 'some-namespace';
-
-      container.setState({
-        ...container.state(),
-        selectedNamespace: namespace
-      });
-      container.update();
-      const podsContainer = container.find(Pods).first();
-
-      expect(podsContainer.props().namespace).toBe(
-        container.state().selectedNamespace
-      );
     });
   });
 });

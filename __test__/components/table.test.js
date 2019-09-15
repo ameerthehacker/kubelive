@@ -9,7 +9,12 @@ const { shallow } = require('enzyme');
 
 describe('Table', () => {
   const createTableComponent = (
-    props = { data: [], namespace: 'some-namespace' }
+    props = {
+      data: [],
+      namespace: 'some-namespace',
+      stdin: { on: () => {} },
+      setRawMode: () => {}
+    }
   ) => {
     const tableComponent = new TableComponent(props);
     tableComponent.setState = jest.fn();
@@ -20,9 +25,11 @@ describe('Table', () => {
   describe('componentDidMount()', () => {
     it('should respond to up key only when there is data', () => {
       const tableComponent = createTableComponent();
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'up' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'up' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -31,9 +38,11 @@ describe('Table', () => {
 
     it('should respond to down key only when there is data', () => {
       const tableComponent = createTableComponent();
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'down' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'down' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -42,11 +51,16 @@ describe('Table', () => {
 
     it('should not respond to up key only when the data is undefined', () => {
       const tableComponent = createTableComponent({
-        data: undefined
+        data: undefined,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'up' });
-      });
+
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'up' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -55,11 +69,15 @@ describe('Table', () => {
 
     it('should not respond to down key only when the data is undefined', () => {
       const tableComponent = createTableComponent({
-        data: undefined
+        data: undefined,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'down' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'down' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -75,12 +93,16 @@ describe('Table', () => {
           {
             name: 'Jhan'
           }
-        ]
+        ],
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       tableComponent.state.selectedIndex = 0;
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'down' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'down' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -100,12 +122,16 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       tableComponent.state.selectedIndex = data.length - 1;
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'down' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'down' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -125,12 +151,16 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       tableComponent.state.selectedIndex = data.length - 1;
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'up' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'up' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -150,12 +180,16 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       tableComponent.state.selectedIndex = 0;
-      process.stdin.on = jest.fn().mockImplementation((event, fn) => {
-        fn(undefined, { name: 'up' });
-      });
+      tableComponent.props.stdin.on = jest
+        .fn()
+        .mockImplementation((event, fn) => {
+          fn(undefined, { name: 'up' });
+        });
 
       tableComponent.componentDidMount();
 
@@ -171,7 +205,9 @@ describe('Table', () => {
       const namespace = 'some-namespace';
       const tableComponent = createTableComponent({
         data: [],
-        namespace
+        namespace,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
 
       tableComponent.getSnapshotBeforeUpdate({ namespace });
@@ -182,7 +218,9 @@ describe('Table', () => {
     it('should set selected index to 0 when there is a change in namespace', () => {
       const tableComponent = createTableComponent({
         data: [],
-        namespace: 'some-namespace'
+        namespace: 'some-namespace',
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
 
       tableComponent.getSnapshotBeforeUpdate({
@@ -207,7 +245,9 @@ describe('Table', () => {
             name: 'jhan'
           }
         ],
-        namespace: 'some-namespace'
+        namespace: 'some-namespace',
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
 
       tableComponent.state.selectedIndex = 2;
@@ -490,7 +530,9 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       const cellSpacing = 5;
       const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
@@ -527,7 +569,9 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       const cellSpacing = 5;
       const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
@@ -560,7 +604,9 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       const cellSpacing = 5;
       const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
@@ -593,7 +639,9 @@ describe('Table', () => {
         }
       ];
       const tableComponent = createTableComponent({
-        data
+        data,
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       const cellSpacing = 5;
       const maxLengthOfTextInHeader = tableComponent.getMaxLengthOfTextInHeaders(
@@ -622,7 +670,12 @@ describe('Table', () => {
 
 describe('Table', () => {
   const createTableComponent = (
-    props = { data: [], namespace: 'some-namespace' }
+    props = {
+      data: [],
+      namespace: 'some-namespace',
+      stdin: { on: () => {} },
+      setRawMode: () => {}
+    }
   ) => {
     const tableComponent = shallow(<TableComponent {...props} />);
 
@@ -646,7 +699,9 @@ describe('Table', () => {
         namespace: 'some-namedspace',
         actions: [],
         cellSpacing: 5,
-        onActionPerformed: () => {}
+        onActionPerformed: () => {},
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
 
       expect(tableComponent).toMatchSnapshot();
@@ -672,7 +727,9 @@ describe('Table', () => {
           }
         ],
         actions,
-        namespace: 'some-namespace'
+        namespace: 'some-namespace',
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
 
       const actionBarComponent = tableComponent
@@ -696,7 +753,9 @@ describe('Table', () => {
           }
         ],
         namespace: 'some-namespace',
-        onActionPerformed: jest.fn()
+        onActionPerformed: jest.fn(),
+        stdin: { on: () => {} },
+        setRawMode: () => {}
       });
       const actionBarComponent = tableComponent
         .find(ActionBarComponent)

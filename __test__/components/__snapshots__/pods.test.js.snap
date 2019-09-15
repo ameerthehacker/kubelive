@@ -19,5 +19,11 @@ exports[`PodsComponent should match the snapshot 1`] = `
   }
   namespace="some-name"
   onActionPerformed={[Function]}
+  setRawMode={[Function]}
+  stdin={
+    Object {
+      "on": [Function],
+    }
+  }
 />
 `;

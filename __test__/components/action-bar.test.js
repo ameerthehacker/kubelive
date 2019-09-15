@@ -22,7 +22,9 @@ describe('ActionBarComponent', () => {
   beforeEach(() => {
     actionBarComponent = new ActionBarComponent({
       actions,
-      onActionPerformed: jest.fn()
+      onActionPerformed: jest.fn(),
+      stdin: { on: () => {} },
+      setRawMode: () => {}
     });
     actionBarComponent.setState = jest.fn();
   });
@@ -164,7 +166,7 @@ describe('ActionBarComponent', () => {
         .mockReturnValue(keyPressListeners[1])
         .mockReturnValueOnce(keyPressListeners[0]);
       actionBarComponent.createKeyPressListener = createKeyPressListenerMock;
-      process.stdin.on = jest.fn();
+      actionBarComponent.props.stdin.on = jest.fn();
       const args = [];
 
       actions.forEach((action, index) => {
@@ -175,7 +177,7 @@ describe('ActionBarComponent', () => {
       actionBarComponent.componentDidMount();
 
       // Assert
-      expect(process.stdin.on.mock.calls).toEqual(args);
+      expect(actionBarComponent.props.stdin.on.mock.calls).toEqual(args);
     });
   });
 
@@ -188,7 +190,7 @@ describe('ActionBarComponent', () => {
         .mockReturnValue(keyPressListeners[1])
         .mockReturnValueOnce(keyPressListeners[0]);
       actionBarComponent.createKeyPressListener = createKeyPressListenerMock;
-      process.stdin.removeListener = jest.fn();
+      actionBarComponent.props.stdin.removeListener = jest.fn();
       const args = [];
 
       actions.forEach((action, index) => {
@@ -200,7 +202,9 @@ describe('ActionBarComponent', () => {
       actionBarComponent.componentWillUnmount();
 
       // Assert
-      expect(process.stdin.removeListener.mock.calls).toEqual(args);
+      expect(actionBarComponent.props.stdin.removeListener.mock.calls).toEqual(
+        args
+      );
     });
   });
 
@@ -212,13 +216,23 @@ describe('ActionBarComponent', () => {
 
     beforeEach(() => {
       component = shallow(
-        <ActionBarComponent actions={actions} onActionPerformed={() => {}} />
+        <ActionBarComponent
+          stdin={{ on: () => {} }}
+          setRawMode={() => {}}
+          actions={actions}
+          onActionPerformed={() => {}}
+        />
       );
     });
 
     it('should render nothing when there is no action', () => {
       component = shallow(
-        <ActionBarComponent actions={[]} onActionPerformed={() => {}} />
+        <ActionBarComponent
+          stdin={{ on: () => {} }}
+          setRawMode={() => {}}
+          actions={[]}
+          onActionPerformed={() => {}}
+        />
       );
 
       expect(component.text()).toEqual('');

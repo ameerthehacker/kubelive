@@ -62,9 +62,10 @@ describe('Base', () => {
   });
 
   describe('getSnapshotBeforeUpdate()', () => {
-    it('should call listenForChanges(namespace) when there is a change in namespace', () => {
+    it('should call listenForChanges(namespace) when there is a change in namespace for namespaced respurce', () => {
       base.listenForChanges = jest.fn();
       base.props.namespace = 'namespace2';
+      base.props.isNamespaced = true;
 
       base.getSnapshotBeforeUpdate({
         namespace: 'namespace1'
@@ -218,18 +219,19 @@ describe('Base', () => {
 
 describe('Base', () => {
   const namespace = 'some-namespace';
-  const refreshFn = Promise.resolve({});
+  const refreshFn = 'refreshFn';
   const componentRef = () => 'something';
   const createBase = (
     props = {
       namespace,
-      api: { refreshFn },
-      refreshFn: 'refreshFn',
-      componentRef
+      api: { [refreshFn]: Promise.resolve({}) },
+      refreshFn,
+      componentRef,
+      isNamespaced: true,
+      stdin: { on: () => {} },
+      setRawMode: () => {}
     }
-  ) => {
-    return shallow(<Base {...props} />);
-  };
+  ) => shallow(<Base {...props} />);
 
   describe('render()', () => {
     it('should render the PodsComponent with namspace prop as this.props.namespace when there is no error', () => {
