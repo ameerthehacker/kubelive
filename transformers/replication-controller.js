@@ -17,7 +17,7 @@ const transformReplicationControllerData = (items) => {
     const item = items[i];
 
     replicationControllers.push({
-      name: { text: item.metadata.name },
+      name: { text: item.metadata.name, isSelector: true },
       desired: { text: item.spec.replicas },
       current: { text: item.status.availableReplicas },
       ready: { text: item.status.readyReplicas },
