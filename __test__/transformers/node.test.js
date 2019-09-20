@@ -18,9 +18,6 @@ const buildNodeItems = (options) => {
       nodeInfo: {
         kubeletVersion: options.kubeletVersion || '0.0.0'
       }
-    },
-    spec: {
-      containers: options.containers || [{}]
     }
   };
 
