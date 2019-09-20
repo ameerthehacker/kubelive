@@ -10,7 +10,7 @@ let commandMatched = false;
 const updateNotifier = require('update-notifier');
 
 // Checking for available updates
-const notifier = updateNotifier({ pkg });
+const notifier = updateNotifier({ pkg, isGlobal: true });
 // Show update notification
 notifier.notify();
 
