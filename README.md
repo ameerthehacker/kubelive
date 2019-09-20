@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <strong>kubectl</strong> tool reinvented to be more reactive and interactive :fire:
+  <strong>kubectl</strong> tool reinvented to be more reactive and interactive
 </p>
 <p align="center">
   <img alt="Demo" src="https://github.com/ameerthehacker/project-assets/blob/master/kubelive/screenshots/kubelive-gif-hq.gif?raw=true" />
