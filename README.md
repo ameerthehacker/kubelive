@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Kubernetes command line tool to provide live data about the cluster and it's resources
+  <strong>kubectl</strong> tool reinvented to be more reactive and interactive :fire:
 </p>
 <p align="center">
   <img alt="Demo" src="https://github.com/ameerthehacker/project-assets/blob/master/kubelive/screenshots/kubelive-gif-hq.gif?raw=true" />
@@ -39,13 +39,31 @@ npm install -g kubelive
 
 ## Available commands
 
-Show list of pods in the clutser
+- List the pods in the clutser
 
 ```sh
 kubelive get pods
 ```
 
-As a shortcut you can also use
+- List the services in the clutser
+
+```sh
+kubelive get services
+```
+
+- List the replication controllers in the clutser
+
+```sh
+kubelive get replicationcontrollers
+```
+
+- List the nodes in the clutser
+
+```sh
+kubelive get nodes
+```
+
+- List the pods in the cluster in a jiffy
 
 ```sh
 kubelive
@@ -60,6 +78,16 @@ kubelive
 - You can press the **D** key to delete the selected pod
 
 - You can press the **C** key to copy the name of the selected pod
+
+## Roadmap
+
+- [x] Add support for pods
+- [x] Add support por nodes, services, replication controllers
+- [ ] Add support for ingress, deployments, replica sets
+- [ ] Show live logs from pods
+- [ ] Shell into a running pod
+- [ ] Add support for filter by name flag
+- [ ] Add support for refresh rate flag
 
 Show your support by :star: the repo
 

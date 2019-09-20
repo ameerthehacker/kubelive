@@ -5,6 +5,11 @@ const importJsx = require('import-jsx');
 const App = importJsx('../../containers/app');
 const Namespaces = importJsx('../../containers/namespaces');
 const Pods = importJsx('../../containers/pods');
+const Nodes = importJsx('../../containers/nodes');
+const Services = importJsx('../../containers/services');
+const ReplicationController = importJsx(
+  '../../containers/replication-controllers'
+);
 const { Color } = require('ink');
 jest.mock('../../kube/api');
 
@@ -27,6 +32,50 @@ describe('App', () => {
       component.props.resource = 'pods';
 
       expect(component.getResourceComponent()).toEqual(Pods);
+    });
+
+    it('should return ServiceComponent when the resource is service', () => {
+      component.props.resource = 'service';
+
+      expect(component.getResourceComponent()).toEqual(Services);
+    });
+
+    it('should return ServiceComponent when the resource is services', () => {
+      component.props.resource = 'services';
+
+      expect(component.getResourceComponent()).toEqual(Services);
+    });
+
+    it('should return ReplicationControllerComponent when the resource is replication controller', () => {
+      component.props.resource = 'replicationcontroller';
+
+      expect(component.getResourceComponent()).toEqual(ReplicationController);
+    });
+
+    it('should return ReplicationControllerComponent when the resource is replication controllers', () => {
+      component.props.resource = 'replicationcontrollers';
+
+      expect(component.getResourceComponent()).toEqual(ReplicationController);
+    });
+
+    it('should return NodeComponent when the resource is node', () => {
+      component.props.resource = 'node';
+
+      expect(component.getResourceComponent()).toEqual(Nodes);
+    });
+
+    it('should return NodeComponent when the resource is nodes', () => {
+      component.props.resource = 'nodes';
+
+      expect(component.getResourceComponent()).toEqual(Nodes);
+    });
+
+    it('should set isNamespaced to false when the resource is node', () => {
+      component.props.resource = 'node';
+
+      component.getResourceComponent();
+
+      expect(component.isNamespaced).toBeFalsy();
     });
 
     it('should return false when the resource is not found', () => {
@@ -61,6 +110,32 @@ describe('App', () => {
       const colorComponent = container.find(Color);
 
       expect(colorComponent.exists()).toBeTruthy();
+    });
+
+    it('should render the namespace component only when isNamespaced is true', () => {
+      container.setProps({
+        ...container.props(),
+        resource: 'pods'
+      });
+      container.isNamespaced = true;
+
+      container.instance().forceUpdate();
+
+      const namespaceComponent = container.find(Namespaces);
+      expect(namespaceComponent.exists()).toBeTruthy();
+    });
+
+    it('should not render the namespace component isNamespaced is false', () => {
+      container.setProps({
+        ...container.props(),
+        resource: 'nodes'
+      });
+      container.isNamespaced = false;
+
+      container.instance().forceUpdate();
+
+      const namespaceComponent = container.find(Namespaces);
+      expect(namespaceComponent.exists()).toBeFalsy();
     });
 
     it('should render the component when the resource is found', () => {
