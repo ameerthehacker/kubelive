@@ -1,5 +1,5 @@
 'use strict';
-const { executeAction } = require('../../actions/base');
+const { baseExecuteAction } = require('../../actions/base');
 const clipboardy = require('clipboardy');
 
 describe('executeAction()', () => {
@@ -9,7 +9,7 @@ describe('executeAction()', () => {
 
   it('should call clipboardy.writeSync()', () => {
     const name = 'some-pod-name';
-    executeAction({ name: 'c' }, name);
+    baseExecuteAction({ name: 'c' }, name);
 
     expect(clipboardy.writeSync).toHaveBeenCalledWith(name);
   });
