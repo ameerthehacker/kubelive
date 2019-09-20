@@ -3,10 +3,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const importJsx = require('import-jsx');
 const { TableComponent } = importJsx('./table');
-const {
-  actions,
-  executeAction
-} = require('../actions/replication-controllers');
+const { actions, executeAction } = require('../actions/replication-controller');
 
 const ReplicationControllerControllers = ({
   items,

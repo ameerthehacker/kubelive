@@ -3,7 +3,7 @@ const React = require('react');
 const PropTypes = require('prop-types');
 const importJsx = require('import-jsx');
 const { TableComponent } = importJsx('./table');
-const { actions, executeAction } = require('../actions/services');
+const { actions, executeAction } = require('../actions/service');
 
 const ServicesComponent = ({ items, namespace, stdin, setRawMode }) => {
   return (
