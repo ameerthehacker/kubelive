@@ -30,6 +30,17 @@ describe('transformServiceData()', () => {
     expect(service.name.text).toEqual(serviceName);
   });
 
+  it('should set the service name as selector', () => {
+    const serviceName = 'some-service-name';
+    const items = buildServiceItems({
+      name: serviceName
+    });
+
+    const service = transformServiceData(items)[0];
+
+    expect(service.name.isSelector).toBeTruthy();
+  });
+
   it('should set the service type correctly', () => {
     const type = 'LoadBalancer';
     const items = buildServiceItems({
