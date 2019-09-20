@@ -7,7 +7,7 @@ const actions = [...baseActions];
 const executeAction = (key, name, namespace) => {
   if (key.name == 'd') {
     k8sApi
-      .deleteNamespacedPod(name, namespace)
+      .deleteNamespacedService(name, namespace)
       //TODO: show the error somewhere
       .catch(() => {});
   } else {

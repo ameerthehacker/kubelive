@@ -2,13 +2,17 @@
 const k8sApi = require('../kube/api');
 const React = require('react');
 const importJsx = require('import-jsx');
-const PodsComponent = importJsx('../components/pods');
+const ReplicationControllersComponent = importJsx(
+  '../components/replication-controllers'
+);
 const BaseContainer = importJsx('./base');
 const { Component } = require('react');
 const PropTypes = require('prop-types');
-const { transformPodData } = require('../transformers/pod');
+const {
+  transformReplicationControllerData
+} = require('../transformers/replication-controller');
 
-class Pods extends Component {
+class ReplicationControllers extends Component {
   constructor(props) {
     super(props);
   }
@@ -17,10 +21,10 @@ class Pods extends Component {
     return (
       <BaseContainer
         namespace={this.props.namespace}
-        transformer={transformPodData}
+        transformer={transformReplicationControllerData}
         api={k8sApi}
-        refreshFn="listNamespacedPod"
-        componentRef={PodsComponent}
+        refreshFn="listNamespacedReplicationController"
+        componentRef={ReplicationControllersComponent}
         isNamespaced={true}
         stdin={this.props.stdin}
         setRawMode={this.props.setRawMode}
@@ -29,10 +33,10 @@ class Pods extends Component {
   }
 }
 
-Pods.propTypes = {
+ReplicationControllers.propTypes = {
   namespace: PropTypes.string.isRequired,
   stdin: PropTypes.object.isRequired,
   setRawMode: PropTypes.func.isRequired
 };
 
-module.exports = Pods;
+module.exports = ReplicationControllers;

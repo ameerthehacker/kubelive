@@ -5,8 +5,8 @@ exports[`App render() should match the snapshot 1`] = `
   <Namespaces
     onNamespaceChange={[Function]}
   />
-  <Pods
-    namespace=""
-  />
+  <ContextConsumer>
+    <Component />
+  </ContextConsumer>
 </Fragment>
 `;

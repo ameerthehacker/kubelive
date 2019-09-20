@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PodsComponent should match the snapshot 1`] = `
+exports[`NodesComponent should match the snapshot 1`] = `
 <TableComponent
   actions={
     Array [
@@ -13,11 +13,10 @@ exports[`PodsComponent should match the snapshot 1`] = `
   data={
     Array [
       Object {
-        "name": "some-pod-name",
+        "name": "some-node-name",
       },
     ]
   }
-  namespace="some-name"
   onActionPerformed={[Function]}
   setRawMode={[Function]}
   stdin={

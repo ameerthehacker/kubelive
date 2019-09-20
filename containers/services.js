@@ -2,11 +2,11 @@
 const k8sApi = require('../kube/api');
 const React = require('react');
 const importJsx = require('import-jsx');
-const PodsComponent = importJsx('../components/pods');
+const ServicesComponent = importJsx('../components/services');
 const BaseContainer = importJsx('./base');
 const { Component } = require('react');
 const PropTypes = require('prop-types');
-const { transformPodData } = require('../transformers/pod');
+const { transformServiceData } = require('../transformers/service');
 
 class Pods extends Component {
   constructor(props) {
@@ -17,10 +17,10 @@ class Pods extends Component {
     return (
       <BaseContainer
         namespace={this.props.namespace}
-        transformer={transformPodData}
+        transformer={transformServiceData}
         api={k8sApi}
-        refreshFn="listNamespacedPod"
-        componentRef={PodsComponent}
+        refreshFn="listNamespacedService"
+        componentRef={ServicesComponent}
         isNamespaced={true}
         stdin={this.props.stdin}
         setRawMode={this.props.setRawMode}

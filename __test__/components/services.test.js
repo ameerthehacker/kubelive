@@ -11,26 +11,26 @@ const mockActions = {
   ],
   executeAction: executeActionMock
 };
-jest.mock('../../actions/pod', () => mockActions);
-const { actions } = require('../../actions/pod');
+jest.mock('../../actions/service', () => mockActions);
+const { actions } = require('../../actions/service');
 const importJsx = require('import-jsx');
-const PodsComponent = importJsx('../../components/pods');
+const ServicesComponent = importJsx('../../components/services');
 const { TableComponent } = importJsx('../../components/table');
 
-describe('PodsComponent', () => {
+describe('ServicesComponent', () => {
   let component;
   let tableComponent;
-  const pods = [
+  const services = [
     {
-      name: 'some-pod-name'
+      name: 'some-service-name'
     }
   ];
   let namespace = 'some-name';
 
   beforeEach(() => {
     component = shallow(
-      <PodsComponent
-        items={pods}
+      <ServicesComponent
+        items={services}
         stdin={{ on: () => {} }}
         setRawMode={() => {}}
         namespace={namespace}
@@ -44,8 +44,8 @@ describe('PodsComponent', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('tableComponent should get passed the data props as pods', () => {
-    expect(tableComponent.props().data).toEqual(pods);
+  it('tableComponent should get passed the data props as services', () => {
+    expect(tableComponent.props().data).toEqual(services);
   });
 
   it('tableComponent should get passed the namespace props', () => {
@@ -58,7 +58,7 @@ describe('PodsComponent', () => {
 
   it('tableComponent should call executeAction(key, name, namespace) when onActionPerformed is called', () => {
     const key = { name: 'c' };
-    const name = 'some-pod-name';
+    const name = 'some-service-name';
 
     tableComponent.invoke('onActionPerformed')({ key, name, namespace });
 

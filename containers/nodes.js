@@ -2,13 +2,13 @@
 const k8sApi = require('../kube/api');
 const React = require('react');
 const importJsx = require('import-jsx');
-const PodsComponent = importJsx('../components/pods');
+const NodesComponent = importJsx('../components/nodes');
 const BaseContainer = importJsx('./base');
 const { Component } = require('react');
+const { transformNodeData } = require('../transformers/node');
 const PropTypes = require('prop-types');
-const { transformPodData } = require('../transformers/pod');
 
-class Pods extends Component {
+class Nodes extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,12 +16,11 @@ class Pods extends Component {
   render() {
     return (
       <BaseContainer
-        namespace={this.props.namespace}
-        transformer={transformPodData}
+        transformer={transformNodeData}
         api={k8sApi}
-        refreshFn="listNamespacedPod"
-        componentRef={PodsComponent}
-        isNamespaced={true}
+        refreshFn="listNode"
+        componentRef={NodesComponent}
+        isNamespaced={false}
         stdin={this.props.stdin}
         setRawMode={this.props.setRawMode}
       />
@@ -29,10 +28,9 @@ class Pods extends Component {
   }
 }
 
-Pods.propTypes = {
-  namespace: PropTypes.string.isRequired,
+Nodes.propTypes = {
   stdin: PropTypes.object.isRequired,
   setRawMode: PropTypes.func.isRequired
 };
 
-module.exports = Pods;
+module.exports = Nodes;

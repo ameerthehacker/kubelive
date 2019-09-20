@@ -11,25 +11,27 @@ const mockActions = {
   ],
   executeAction: executeActionMock
 };
-jest.mock('../../actions/pod', () => mockActions);
-const { actions } = require('../../actions/pod');
+jest.mock('../../actions/replication-controller', () => mockActions);
+const { actions } = require('../../actions/replication-controller');
 const importJsx = require('import-jsx');
-const PodsComponent = importJsx('../../components/pods');
+const ReplicationControllerComponent = importJsx(
+  '../../components/replication-controllers'
+);
 const { TableComponent } = importJsx('../../components/table');
 
-describe('PodsComponent', () => {
+describe('ReplicationControllerComponent', () => {
   let component;
   let tableComponent;
   const pods = [
     {
-      name: 'some-pod-name'
+      name: 'some-replication-controller-name'
     }
   ];
   let namespace = 'some-name';
 
   beforeEach(() => {
     component = shallow(
-      <PodsComponent
+      <ReplicationControllerComponent
         items={pods}
         stdin={{ on: () => {} }}
         setRawMode={() => {}}
@@ -44,7 +46,7 @@ describe('PodsComponent', () => {
     expect(component).toMatchSnapshot();
   });
 
-  it('tableComponent should get passed the data props as pods', () => {
+  it('tableComponent should get passed the data props as replication controllers', () => {
     expect(tableComponent.props().data).toEqual(pods);
   });
 

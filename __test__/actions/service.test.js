@@ -11,19 +11,22 @@ const mockActions = {
 };
 jest.mock('../../actions/base', () => mockActions);
 const { baseExecuteAction } = require('../../actions/base');
-const { executeAction } = require('../../actions/pod');
+const { executeAction } = require('../../actions/service');
 
 describe('executeAction()', () => {
   beforeEach(() => {
-    k8sApi.deleteNamespacedPod = jest.fn().mockResolvedValue();
+    k8sApi.deleteNamespacedService = jest.fn().mockResolvedValue();
   });
 
-  it('should call k8sApi.deleteNameSpacedPod(name, namespace) when key d is pressed', () => {
-    const name = 'some-pod-name';
+  it('should call k8sApi.deleteNameSpacedService(name, namespace) when key d is pressed', () => {
+    const name = 'some-service-name';
     const namespace = 'some-namespace-name';
     executeAction({ name: 'd' }, name, namespace);
 
-    expect(k8sApi.deleteNamespacedPod).toHaveBeenCalledWith(name, namespace);
+    expect(k8sApi.deleteNamespacedService).toHaveBeenCalledWith(
+      name,
+      namespace
+    );
   });
 
   it('should call baseExecute action when nothing matches', () => {

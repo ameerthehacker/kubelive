@@ -4,12 +4,17 @@ const { Component } = require('react');
 const importJsx = require('import-jsx');
 const Namespaces = importJsx('./namespaces');
 const Pods = importJsx('./pods');
-const PropTypes = require('prop-types');
+const Services = importJsx('./services');
+const ReplicationController = importJsx('./replication-controllers');
+const Nodes = importJsx('./nodes');
 const { Color } = require('ink');
+const { StdinContext } = require('ink');
+const PropTypes = require('prop-types');
 
 class App extends Component {
   constructor(props) {
     super(props);
+    this.isNamespaced = true;
     this.state = { selectedNamespace: '' };
     this.onNamespaceChange = this.onNamespaceChange.bind(this);
   }
@@ -22,20 +27,40 @@ class App extends Component {
     switch (this.props.resource) {
       case 'pod':
       case 'pods':
-        return <Pods namespace={this.state.selectedNamespace} />;
+        return Pods;
+      case 'service':
+      case 'services':
+        return Services;
+      case 'replicationcontroller':
+      case 'replicationcontrollers':
+        return ReplicationController;
+      case 'node':
+      case 'nodes':
+        this.isNamespaced = false;
+        return Nodes;
       default:
         return false;
     }
   }
 
   render() {
-    const resourceComponent = this.getResourceComponent();
+    const ResourceComponent = this.getResourceComponent();
 
-    if (resourceComponent) {
+    if (ResourceComponent) {
       return (
         <React.Fragment>
-          <Namespaces onNamespaceChange={this.onNamespaceChange} />
-          {resourceComponent}
+          {this.isNamespaced ? (
+            <Namespaces onNamespaceChange={this.onNamespaceChange} />
+          ) : null}
+          <StdinContext.Consumer>
+            {({ stdin, setRawMode }) => (
+              <ResourceComponent
+                namespace={this.state.selectedNamespace}
+                stdin={stdin}
+                setRawMode={setRawMode}
+              />
+            )}
+          </StdinContext.Consumer>
         </React.Fragment>
       );
     } else {

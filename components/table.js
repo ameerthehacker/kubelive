@@ -30,7 +30,8 @@ class TableComponent extends React.Component {
   }
 
   componentDidMount() {
-    process.stdin.on('keypress', (chunk, key) => {
+    this.props.setRawMode(true);
+    this.props.stdin.on('keypress', (chunk, key) => {
       if (this.props.data && this.props.data.length > 0) {
         if (key.name == 'down') {
           this.setState({
@@ -248,6 +249,8 @@ class TableComponent extends React.Component {
       <React.Fragment>
         <ActionBarComponent
           actions={this.props.actions}
+          stdin={this.props.stdin}
+          setRawMode={this.props.setRawMode}
           onActionPerformed={(key) => {
             if (this.props.onActionPerformed) {
               this.props.onActionPerformed({
@@ -270,7 +273,9 @@ TableComponent.propTypes = {
   cellSpacing: PropTypes.number,
   actions: PropTypes.array,
   onActionPerformed: PropTypes.func,
-  namespace: PropTypes.string.isRequired
+  namespace: PropTypes.string,
+  stdin: PropTypes.object.isRequired,
+  setRawMode: PropTypes.func.isRequired
 };
 
 module.exports = {

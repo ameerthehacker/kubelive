@@ -4,14 +4,14 @@ const { baseActions, baseExecuteAction } = require('./base');
 
 const actions = [...baseActions];
 
-const executeAction = (key, name, namespace) => {
+const executeAction = (key, name) => {
   if (key.name == 'd') {
     k8sApi
-      .deleteNamespacedPod(name, namespace)
+      .deleteNode(name)
       //TODO: show the error somewhere
       .catch(() => {});
   } else {
-    baseExecuteAction(key, name, namespace);
+    baseExecuteAction(key, name);
   }
 };
 
