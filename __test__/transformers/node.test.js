@@ -1,5 +1,5 @@
 'use strict';
-const { transformNodeData } = require('../../transformers/node');
+const { transformNodeData } = require('../../src/transformers/node');
 
 const buildNodeItems = (options) => {
   const item = {

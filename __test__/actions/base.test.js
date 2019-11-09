@@ -1,5 +1,5 @@
 'use strict';
-const { baseExecuteAction } = require('../../actions/base');
+const { baseExecuteAction } = require('../../src/actions/base');
 const clipboardy = require('clipboardy');
 
 describe('executeAction()', () => {

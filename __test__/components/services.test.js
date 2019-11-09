@@ -11,11 +11,11 @@ const mockActions = {
   ],
   executeAction: executeActionMock
 };
-jest.mock('../../actions/service', () => mockActions);
-const { actions } = require('../../actions/service');
+jest.mock('../../src/actions/service', () => mockActions);
+const { actions } = require('../../src/actions/service');
 const importJsx = require('import-jsx');
-const ServicesComponent = importJsx('../../components/services');
-const { TableComponent } = importJsx('../../components/table');
+const ServicesComponent = importJsx('../../src/components/services');
+const { TableComponent } = importJsx('../../src/components/table');
 
 describe('ServicesComponent', () => {
   let component;

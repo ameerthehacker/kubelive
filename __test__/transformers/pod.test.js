@@ -1,5 +1,8 @@
 'use strict';
-const { colorCodeStatus, transformPodData } = require('../../transformers/pod');
+const {
+  colorCodeStatus,
+  transformPodData
+} = require('../../src/transformers/pod');
 
 const buildPodItems = (options) => {
   const item = {

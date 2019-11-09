@@ -1,9 +1,9 @@
 const React = require('react');
 const importJsx = require('import-jsx');
 const { TableComponent, SelectionHighlighterComponent } = importJsx(
-  '../../components/table'
+  '../../src/components/table'
 );
-const ActionBarComponent = importJsx('../../components/action-bar');
+const ActionBarComponent = importJsx('../../src/components/action-bar');
 const { Color, Box } = require('ink');
 const { shallow } = require('enzyme');
 

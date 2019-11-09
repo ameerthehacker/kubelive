@@ -1,5 +1,5 @@
 'use strict';
-const k8sApi = require('../../kube/api');
+const k8sApi = require('../../src/kube/api');
 const mockActions = {
   baseActions: [
     {
@@ -9,9 +9,9 @@ const mockActions = {
   ],
   baseExecuteAction: jest.fn()
 };
-jest.mock('../../actions/base', () => mockActions);
-const { baseExecuteAction } = require('../../actions/base');
-const { executeAction } = require('../../actions/pod');
+jest.mock('../../src/actions/base', () => mockActions);
+const { baseExecuteAction } = require('../../src/actions/base');
+const { executeAction } = require('../../src/actions/pod');
 
 describe('executeAction()', () => {
   beforeEach(() => {
