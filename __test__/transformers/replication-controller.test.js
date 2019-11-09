@@ -1,7 +1,7 @@
 'use strict';
 const {
   transformReplicationControllerData
-} = require('../../transformers/replication-controller');
+} = require('../../src/transformers/replication-controller');
 
 const buildReplicationControllerItems = (options) => {
   const item = {

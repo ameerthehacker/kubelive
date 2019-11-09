@@ -1,9 +1,9 @@
 'use strict';
 const React = require('react');
 const importJsx = require('import-jsx');
-const Namespaces = importJsx('../../containers/namespaces');
-const NamespacesComponent = importJsx('../../components/namespaces');
-const k8sApi = require('../../kube/api');
+const Namespaces = importJsx('../../src/containers/namespaces');
+const NamespacesComponent = importJsx('../../src/components/namespaces');
+const k8sApi = require('../../src/kube/api');
 const { shallow } = require('enzyme');
 const { Color } = require('ink');
 

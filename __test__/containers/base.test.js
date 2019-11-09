@@ -2,9 +2,9 @@
 const React = require('react');
 const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
-const Base = importJsx('../../containers/base');
+const Base = importJsx('../../src/containers/base');
 const { Color } = require('ink');
-jest.mock('../../transformers/pod', () => ({
+jest.mock('../../src/transformers/pod', () => ({
   transformPodData: jest.fn()
 }));
 

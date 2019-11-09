@@ -2,7 +2,7 @@
 const React = require('react');
 const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
-const NamespacesComponent = importJsx('../../components/namespaces');
+const NamespacesComponent = importJsx('../../src/components/namespaces');
 const { Tab, Tabs } = require('ink-tab');
 
 describe('NamespacesComponent', () => {

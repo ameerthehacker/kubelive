@@ -11,13 +11,13 @@ const mockActions = {
   ],
   executeAction: executeActionMock
 };
-jest.mock('../../actions/replication-controller', () => mockActions);
-const { actions } = require('../../actions/replication-controller');
+jest.mock('../../src/actions/replication-controller', () => mockActions);
+const { actions } = require('../../src/actions/replication-controller');
 const importJsx = require('import-jsx');
 const ReplicationControllerComponent = importJsx(
-  '../../components/replication-controllers'
+  '../../src/components/replication-controllers'
 );
-const { TableComponent } = importJsx('../../components/table');
+const { TableComponent } = importJsx('../../src/components/table');
 
 describe('ReplicationControllerComponent', () => {
   let component;

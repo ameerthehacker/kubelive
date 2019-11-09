@@ -11,11 +11,11 @@ const mockActions = {
   ],
   executeAction: executeActionMock
 };
-jest.mock('../../actions/pod', () => mockActions);
-const { actions } = require('../../actions/pod');
+jest.mock('../../src/actions/pod', () => mockActions);
+const { actions } = require('../../src/actions/pod');
 const importJsx = require('import-jsx');
-const NodesComponent = importJsx('../../components/pods');
-const { TableComponent } = importJsx('../../components/table');
+const NodesComponent = importJsx('../../src/components/pods');
+const { TableComponent } = importJsx('../../src/components/table');
 
 describe('NodesComponent', () => {
   let component;

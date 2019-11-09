@@ -1,7 +1,7 @@
 'use strict';
 const React = require('react');
 const importJsx = require('import-jsx');
-const ActionBarComponent = importJsx('../../components/action-bar');
+const ActionBarComponent = importJsx('../../src/components/action-bar');
 const { shallow } = require('enzyme');
 const { Box, Color } = require('ink');
 

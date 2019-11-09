@@ -1,7 +1,7 @@
 'use strict';
 const React = require('react');
 const importJsx = require('import-jsx');
-const App = importJsx('./containers/app');
+const App = importJsx('./src/containers/app');
 const { render } = require('ink');
 const cli = require('commander');
 const pkg = require('./package.json');

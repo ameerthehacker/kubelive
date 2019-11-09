@@ -1,5 +1,5 @@
 'use strict';
-const { transformServiceData } = require('../../transformers/service');
+const { transformServiceData } = require('../../src/transformers/service');
 
 const buildServiceItems = (options) => {
   const item = {

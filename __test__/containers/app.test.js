@@ -2,16 +2,16 @@
 const React = require('react');
 const { shallow } = require('enzyme');
 const importJsx = require('import-jsx');
-const App = importJsx('../../containers/app');
-const Namespaces = importJsx('../../containers/namespaces');
-const Pods = importJsx('../../containers/pods');
-const Nodes = importJsx('../../containers/nodes');
-const Services = importJsx('../../containers/services');
+const App = importJsx('../../src/containers/app');
+const Namespaces = importJsx('../../src/containers/namespaces');
+const Pods = importJsx('../../src/containers/pods');
+const Nodes = importJsx('../../src/containers/nodes');
+const Services = importJsx('../../src/containers/services');
 const ReplicationController = importJsx(
-  '../../containers/replication-controllers'
+  '../../src/containers/replication-controllers'
 );
 const { Color } = require('ink');
-jest.mock('../../kube/api');
+jest.mock('../../src/kube/api');
 
 describe('App', () => {
   let component;
