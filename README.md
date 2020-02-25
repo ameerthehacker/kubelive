@@ -31,7 +31,7 @@ I felt that the output from **kubectl get pod -w** is very cluttered and it is a
 
 ## Installation
 
-Make sure you have node installed and then run the command
+Make sure you have node v10 or higher installed and then run the command
 
 ```sh
 npm install -g kubelive
@@ -39,25 +39,25 @@ npm install -g kubelive
 
 ## Available commands
 
-- List the pods in the clutser
+- List the pods in the cluster
 
 ```sh
 kubelive get pods
 ```
 
-- List the services in the clutser
+- List the services in the cluster
 
 ```sh
 kubelive get services
 ```
 
-- List the replication controllers in the clutser
+- List the replication controllers in the cluster
 
 ```sh
 kubelive get replicationcontrollers
 ```
 
-- List the nodes in the clutser
+- List the nodes in the cluster
 
 ```sh
 kubelive get nodes
