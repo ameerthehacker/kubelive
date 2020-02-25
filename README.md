@@ -31,7 +31,7 @@ I felt that the output from **kubectl get pod -w** is very cluttered and it is a
 
 ## Installation
 
-Make sure you have node installed and then run the command
+Make sure you have node v10 or higher installed and then run the command
 
 ```sh
 npm install -g kubelive
