@@ -29,9 +29,11 @@
 
 I felt that the output from **kubectl get pod -w** is very cluttered and it is a pain in my ass to understand which pod is running, which pod is exactly terminating so I built **kubelive** which updates the status of the pods in realtime without cluttering the terminal
 
-## Installation
+## Requirements
 
-Make sure you have node v10 or higher installed and then run the command
+- node v10 or higher
+
+## Installation
 
 ```sh
 npm install -g kubelive
