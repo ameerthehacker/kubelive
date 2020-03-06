@@ -13,4 +13,12 @@ describe('executeAction()', () => {
 
     expect(clipboardy.writeSync).toHaveBeenCalledWith(name);
   });
+
+  it('should exit the program without any fuss', () => {
+    process.exit = jest.fn();
+
+    baseExecuteAction({ name: 'q' });
+
+    expect(process.exit).toHaveBeenCalledWith(0);
+  });
 });
