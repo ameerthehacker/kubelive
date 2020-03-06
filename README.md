@@ -81,6 +81,8 @@ kubelive
 
 - You can press the **C** key to copy the name of the selected pod
 
+- You can press the **Q** key to quit the app
+
 ## Roadmap
 
 - [x] Add support for pods
