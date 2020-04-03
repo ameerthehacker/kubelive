@@ -83,6 +83,11 @@ kubelive
 
 - You can press the **Q** key to quit the app
 
+## What others say
+
+<img width="500px" src="https://raw.githubusercontent.com/ameerthehacker/project-assets/master/kubelive/screenshots/twitter-2.png" alt="twitter-2" />
+<img width="500px" src="https://raw.githubusercontent.com/ameerthehacker/project-assets/master/kubelive/screenshots/twitter-1.png" alt="twitter-1" />
+
 ## Roadmap
 
 - [x] Add support for pods
