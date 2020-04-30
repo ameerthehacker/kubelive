@@ -89,7 +89,7 @@ kubelive help
 kubelive --version
 ```
 
-Kubelive also supports shortnames for resources similar to kubectl, the below command will list services
+Kubelive also supports short names for resources similar to kubectl, the below command will list services
 
 ```sh
 kubectl get svc
