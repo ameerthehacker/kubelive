@@ -27,15 +27,19 @@ class App extends Component {
     switch (this.props.resource) {
       case 'pod':
       case 'pods':
+      case 'po':
         return Pods;
       case 'service':
+      case 'svc':
       case 'services':
         return Services;
       case 'replicationcontroller':
       case 'replicationcontrollers':
+      case 'rc':
         return ReplicationController;
       case 'node':
       case 'nodes':
+      case 'no':
         this.isNamespaced = false;
         return Nodes;
       default:
