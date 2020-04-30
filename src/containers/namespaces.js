@@ -28,6 +28,10 @@ class Namespaces extends Component {
       })
       .catch((err) => {
         this.setState({ ...this.state, err: err.code });
+        if (process.env.NODE_ENV !== 'test') {
+          // exit the process
+          process.exit(1);
+        }
       });
   }
 
