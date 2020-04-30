@@ -65,10 +65,28 @@ kubelive get replicationcontrollers
 kubelive get nodes
 ```
 
+- List resources from a different context
+
+```sh
+kubelive get <resource> --context <name>
+```
+
 - List the pods in the cluster in a jiffy
 
 ```sh
 kubelive
+```
+
+- Get help on all available commands
+
+```sh
+kubelive help
+```
+
+- Get the current kubelive version
+
+```sh
+kubelive --version
 ```
 
 ## Actions
