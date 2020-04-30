@@ -89,6 +89,12 @@ kubelive help
 kubelive --version
 ```
 
+Kubelive also supports short names for resources similar to kubectl, the below command will list services
+
+```sh
+kubectl get svc
+```
+
 ## Actions
 
 - You can use the :arrow_left: and :arrow_right: keys to switch between available namespaces
