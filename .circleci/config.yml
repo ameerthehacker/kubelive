@@ -50,7 +50,7 @@ jobs:
           command: ./node_modules/codecov/bin/codecov
   release:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     steps:
       - checkout
 
