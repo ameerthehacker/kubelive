@@ -56,6 +56,6 @@
     "lint-staged": "^9.2.3",
     "prettier": "^1.18.2",
     "react-dom": "^16.9.0",
-    "semantic-release": "^15.13.24"
+    "semantic-release": "^17.2.3"
   }
 }
